@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Info Member</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/Basic.css}">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<div id="searchItem" class="searchItem">
+				<a @click="searchclick" name="button"> <img id="search" src="../img/search.png" alt="search"></a>
+ 				<div :class="[dropdown,toggle]">
+ 				<ul>
+ 				<form action="/item/searchItem?" method="get">
+					<select name="categorySearchBar">
+						<option value="Outer" selected>Outer</option>
+						<option value="Skirt">Skirt</option>
+						<option value="Pants">Pants</option>
+						<option value="Blouse">Blouse</option>
+						<option value="Shirts">Shirts</option>
+						<option value="Accessory">Accessory</option>
+						<option value="Shoes">Shoes</option>
+						<option value="Bag">Bag</option>
+					</select>
+					<input class="searchform" type="text" name="keyword" id="keyword">
+					<button type="submit">검색</button>
+				</form>
+  				</ul>
+  				</div>
+	</div>
+	<div class="header">
+		<img id="logo" src="../img/백구시보.png" alt="logo"> <input
+			type="checkbox" id="chk">
+		<div class="menu">
+			<a id="products">PRODUCTS</a> <a id="aboutus">ABOUT US</a> <a
+				class="icon" href="/orderItem/viewCartMemNum">
+		<a th:if="${session.user}">
+				<a class="icon" th:href="@{/member/mainMember}"><img id="user" src="../img/user.png" alt="user"></a>
+			</a>
+			<a th:if="${session.user}!=null or ${session.admin}!=null">
+				<a id="log" th:href="@{/member/logoutMember}">LogOut</a>
+			</a>
+			<a th:if="${session.user}==null and ${session.admin}==null">
+				<a th:href="@{/member/loginMember}">LogIn</a>
+				<a th:href="@{/member/joinMember}">Join Us</a>
+			</a>
+			<a th:unless="${session.admin}">
+				<a class="icon" href="/orderItem/viewCartMemNum"><img id="cart" src="../img/cart.png" alt="cart"></a>
+            </a>
+
+		</div>
+    
+    <div class = "main_center_text">
+    <p class="main_center_p"> 
+ My page </p>
+   <div  class="a" ></div>
+</div>
+<!-- main text end-->
+
+
+<main class="info_main">
+ <p class="info_text"> "저희 쇼핑몰을 이용해 주셔서 감사합니다. </p><br>
+	<p class="info_text">  <a  class="mytext" th:text = "${session.user.Id}"></a>  님은 백구시보 회원이십니다.</p>
+    <form action="/member/updateMember" method="post">
+	<a th:text="${failMsg}"></a><br>
+	<br>
+	<label for="Id" class="log_label"> ID &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp; &emsp; &emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp;</label><br>
+    <input class="loginput" type="text" readonly="readonly" name="Id" id="Id" th:value= "${session.user.id}"/><br>
+
+    <label for="Password"  class="log_label"> PW &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp; &emsp; &emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp;</label><br>
+    <input class="loginput"  type="text"   readonly="readonly"  name="password" id="password"  /><br>
+    
+    <label for="Email"  class="log_label"> Email &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp; &emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp;</label><br>
+    <input class="loginput"  type="text" name="Email" id="Email"  th:value="${session.user.email}" /><br>
+    
+    <label for="Address"  class="log_label"> Address &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;  &emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp; </label><br>
+    <input class="loginput" name="Address" id="Address"  th:value="${session.user.address}"  /><br>
+    
+    <div  class="line" ></div> 
+					<br>
+						<br>
+
+      <button  class="loginbtn"  type="submit"> <p class="log_btn_text">  Change information  </p> </button>
+      <br>
+	</form>
+	<br>
+
+        <div  class="line" ></div> 
+ 
+        <br>
+ 
+<button class="loginbtn"   id="back" > <p class="log_btn_text"> Return </p></button>
+</main>
+<div  class="a" ></div>
+<!-- main contents 1 _ img box end-->
+
+<div class="footer">
+        <div class="footer1">ABOUT US</div>
+  	   <div class="footer2">It's the trend that is not in the world</div>
+        <div class="footer3">
+            <p>서울시 서초구 강남대로 459 402호 백구시보</p>
+            <p>010-1234-1234</p>
+            <p>195@google.com</p>
+        </div>
+    </div>
+    <script>
+  	  let app = new Vue({
+      	  el : '#searchItem',
+      	  data(){
+     	     return{
+            dropdown:'dropdown',
+            toggle:{
+              on : false
+            }
+          };
+        },
+        methods :{
+      	  searchclick(){
+              this.toggle.on =! this.toggle.on;
+          }
+        }
+      });
+      document.getElementById("logo").addEventListener('click', function () {
+            location.href = "/";
+      });
+      document.getElementById("aboutus").addEventListener('click', function () {
+      	location.href = "/aboutus";
+      });
+      document.getElementById("products").addEventListener('click', function () {
+      	location.href="/item/search" 
+      });
+      document.querySelector("#back").addEventListener('click', function(){
+  		history.back();
+  	})
+    
+    </script>
+</body>
+
+</html>

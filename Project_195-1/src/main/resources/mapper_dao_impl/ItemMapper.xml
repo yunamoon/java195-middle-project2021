@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTDMapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mp.p195.model.dao.ItemMapper">
+
+	<select id="listAll" resultType="Item">
+		select itemname, itemprice,
+		itemimage, itemsize, itemNum from item
+	</select>
+	<select id="listAll1" resultType="Item">
+		select itemname, itemprice,
+		itemimage, itemsize, itemNum from item
+		where
+		#{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice
+	</select>
+	<select id="listAll2" resultType="Item">
+		select itemname, itemprice,
+		itemimage, itemsize, itemNum from item
+		where
+		#{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+	<select id="listAll3" resultType="Item">
+		select itemname, itemprice,
+		itemimage, itemsize, itemNum from item
+		where
+		#{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+
+	<select id="listAllInfo" resultType="Item">
+		select * from item
+	</select>
+
+	<select id="searchItemNameAndCategory" resultType="Item">
+		SELECT * FROM ITEM where itemname like '%'|| #{keyword}||'%' and itemcategory = #{itemCategory}
+	</select>
+
+	<select id="contentView" resultType="Item">
+		select * from item where
+		itemNum = #{itemNum}
+	</select>
+
+
+	<select id="itemSearchCategoryAndColorAndSize" resultType="Item">
+		select * from item where #{itemCategory} = itemCategory and
+		#{itemColor} = itemColor and #{itemSize} = itemSize
+	</select>
+	<select id="itemSearchCategoryAndColorAndSize1"
+		resultType="Item">
+		select * from item where #{itemCategory} = itemCategory and
+		#{itemColor} = itemColor and #{itemSize} = itemSize
+		and #{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice
+	</select>
+	<select id="itemSearchCategoryAndColorAndSize2"
+		resultType="Item">
+		select * from item where #{itemCategory} = itemCategory and
+		#{itemColor} = itemColor and #{itemSize} = itemSize
+		and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+	<select id="itemSearchCategoryAndColorAndSize3"
+		resultType="Item">
+		select * from item where #{itemCategory} = itemCategory and
+		#{itemColor} = itemColor and #{itemSize} = itemSize
+		and #{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+
+	<select id="itemSearchColorAndSize" resultType="Item">
+		select * from
+		item where #{itemColor} = itemColor and #{itemSize} = itemSize
+	</select>
+	<select id="itemSearchColorAndSize1" resultType="Item">
+		select * from item where #{itemColor} = itemColor and #{itemSize} =
+		itemSize
+		and #{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice
+	</select>
+	<select id="itemSearchColorAndSize2" resultType="Item">
+		select * from item where #{itemColor} = itemColor and #{itemSize} =
+		itemSize
+		and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+	<select id="itemSearchColorAndSize3" resultType="Item">
+		select * from item where #{itemColor} = itemColor and #{itemSize} =
+		itemSize
+		and #{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+
+	<select id="itemSearchCategoryAndColor" resultType="Item">
+		select * from
+		item where #{itemColor} = itemColor and #{itemCategory} =
+		itemCategory
+	</select>
+	<select id="itemSearchCategoryAndColor1" resultType="Item">
+		select * from item where #{itemColor} = itemColor and #{itemCategory}
+		=
+		itemCategory
+		and #{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice
+	</select>
+	<select id="itemSearchCategoryAndColor2" resultType="Item">
+		select *
+		from item where #{itemColor} = itemColor and #{itemCategory} =
+		itemCategory
+		and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+	<select id="itemSearchCategoryAndColor3" resultType="Item">
+		select *
+		from item where #{itemColor} = itemColor and #{itemCategory} =
+		itemCategory
+		and #{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+
+	<select id="itemSearchCategoryAndSize" resultType="Item">
+		select * from
+		item where #{itemSize} = itemSize and #{itemCategory} =
+		itemCategory
+	</select>
+	<select id="itemSearchCategoryAndSize1" resultType="Item">
+		select * from
+		item where #{itemSize} = itemSize and #{itemCategory} =
+		itemCategory
+		and #{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice
+	</select>
+	<select id="itemSearchCategoryAndSize2" resultType="Item">
+		select * from
+		item where #{itemSize} = itemSize and #{itemCategory} =
+		itemCategory
+		and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+	<select id="itemSearchCategoryAndSize3" resultType="Item">
+		select * from
+		item where #{itemSize} = itemSize and #{itemCategory} =
+		itemCategory
+		and #{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+
+	<select id="itemSearchSize" resultType="Item">
+		select * from item where
+		#{itemSize} = itemSize
+	</select>
+	<select id="itemSearchSize1" resultType="Item">
+		select * from item where
+		#{itemSize} = itemSize
+		and #{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice
+	</select>
+	<select id="itemSearchSize2" resultType="Item">
+		select * from item where
+		#{itemSize} = itemSize
+		and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+	<select id="itemSearchSize3" resultType="Item">
+		select * from item where
+		#{itemSize} = itemSize
+		and #{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+
+	<select id="itemSearchColor" resultType="Item">
+		select * from item where
+		#{itemColor} = itemColor
+	</select>
+	<select id="itemSearchColor1" resultType="Item">
+		select * from item where
+		#{itemColor} = itemColor
+		and #{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice
+	</select>
+	<select id="itemSearchColor2" resultType="Item">
+		select * from item where
+		#{itemColor} = itemColor
+		and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+	<select id="itemSearchColor3" resultType="Item">
+		select * from item where
+		#{itemColor} = itemColor
+		and #{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+
+	<select id="itemSearchCategory" resultType="Item">
+		select * from item
+		where #{itemCategory} = itemCategory
+	</select>
+		<select id="itemSearchCategory1" resultType="Item">
+		select * from item
+		where #{itemCategory} = itemCategory
+				and #{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice
+	</select>
+		<select id="itemSearchCategory2" resultType="Item">
+		select * from item
+		where #{itemCategory} = itemCategory
+		and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+		<select id="itemSearchCategory3" resultType="Item">
+		select * from item
+		where #{itemCategory} = itemCategory
+		and #{itemPrice1} <![CDATA[ <= ]]>
+		itemPrice and #{itemPrice2} <![CDATA[ >= ]]>
+		itemPrice
+	</select>
+	
+
+	<insert id="upload" parameterType="Item">
+		INSERT INTO ITEM (ITEMNUM,
+		ITEMNAME, ITEMSIZE, ITEMPRICE, ITEMIMAGE,
+		ITEMCOLOR, ITEMCATEGORY)
+		VALUES(itemnum.nextval, #{itemName}, #{itemSize}, #{itemPrice},
+		#{itemImage}, #{itemColor},
+		#{itemCategory})
+	</insert>
+
+	<delete id="delete" parameterType="Integer">
+		delete from item where itemNum
+		= #{itemNum}
+	</delete>
+
+	<update id="update" parameterType="Item">
+		update item set
+		itemName =
+		#{itemName},
+		itemSize = #{itemSize},
+		itemPrice = #{itemPrice},
+		itemImage
+		= #{itemImage},
+		itemColor = #{itemColor},
+		itemCategory = #{itemCategory}
+		where itemNum = #{itemNum}
+	</update>
+
+	<select id="orderNumSelect" resultType="Integer"
+		parameterType="hashmap">
+		select count(ordernum) from orderitem where ordernum =
+		#{orderNum} and memnum = #{memNum}
+	</select>
+
+	<insert id="addCart" parameterType="hashmap">
+		INSERT INTO orderItem VALUES(
+		#{result} , #{memNum}, #{itemNum},
+		#{orderCount}, 'in')
+	</insert>
+	
+	<select id="listMain" resultType="Item">
+		select itemname, itemprice, itemimage, itemsize, itemNum from item order by itemNum desc
+	</select>
+
+</mapper>

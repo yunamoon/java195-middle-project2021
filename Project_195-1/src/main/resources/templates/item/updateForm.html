@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Update Form</title>
+<style type="text/css">
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	margin: 5px;
+	padding: 0;
+	float: left;
+	list-style: none;
+}
+
+input[name="itemColor"], input[name="itemSize"] {
+	display: none;
+}
+
+input[id="black"]+label {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	cursor: pointer;
+	background-color: black;
+}
+
+input[id="white"]+label {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	cursor: pointer;
+	background-color: #f5f2f2;
+}
+
+input[id="red"]+label {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	cursor: pointer;
+	background-color: red;
+}
+
+input[id="orange"]+label {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	cursor: pointer;
+	background-color: orange;
+}
+
+input[id="yellow"]+label {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	cursor: pointer;
+	background-color: yellow;
+}
+
+input[id="green"]+label {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	cursor: pointer;
+	background-color: green;
+}
+
+input[id="blue"]+label {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	cursor: pointer;
+	background-color: blue;
+}
+
+input[id="navy"]+label {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	cursor: pointer;
+	background-color: navy;
+}
+
+input[id="purple"]+label {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	cursor: pointer;
+	background-color: purple;
+}
+
+input[id="gray"]+label {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	cursor: pointer;
+	background-color: gray;
+}
+
+input[name="itemColor"]:checked+label {
+	border: 2px solid #bcbcbc;
+}
+
+input[name="itemSize"]+label {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	cursor: pointer;
+	background-color: white;
+	text-align: center;
+}
+
+input[name="itemSize"]:checked+label {
+	border: 2px solid #bcbcbc;
+	font-weight: bold;
+	color: black;
+}
+
+label {
+	color: gray;
+}
+
+ul {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+#categoryDiv{
+background-color: #f5f5f5;
+font-size:0.9em;
+height: 50px;
+padding: 13px 60px;
+}
+.categoryLink{
+color: black;
+text-decoration: none;
+}
+
+.ten{
+color: gray;
+}
+</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="searchItem" class="searchItem">
+				<a @click="searchclick" name="button"> <img id="search" src="../img/search.png" alt="search"></a>
+ 				<div :class="[dropdown,toggle]">
+ 				<ul>
+ 				<form action="/item/searchItem?" method="get">
+					<select name="categorySearchBar">
+						<option value="Outer" selected>Outer</option>
+						<option value="Skirt">Skirt</option>
+						<option value="Pants">Pants</option>
+						<option value="Blouse">Blouse</option>
+						<option value="Shirts">Shirts</option>
+						<option value="Accessory">Accessory</option>
+						<option value="Shoes">Shoes</option>
+						<option value="Bag">Bag</option>
+					</select>
+					<input class="searchform" type="text" name="keyword" id="keyword">
+					<button type="submit">검색</button>
+				</form>
+  				</ul>
+  				</div>
+	</div>
+    <div class="header">
+        <img id="logo" src="../img/백구시보.png" alt="logo">
+        <input type="checkbox" id="chk">
+        <div class="menu">
+            <a id="products">PRODUCTS</a>
+            <a id="aboutus">ABOUT US</a>
+            
+            <a th:if="${session.user}">
+				<a class="icon" th:href="@{/member/mainMember}"><img id="user" src="../img/user.png" alt="user"></a>
+			</a>
+			<a th:if="${session.user}!=null or ${session.admin}!=null">
+				<a id="log" th:href="@{/member/logoutMember}">LogOut</a>
+			</a>
+			<a th:if="${session.user}==null and ${session.admin}==null">
+				<a th:href="@{/member/loginMember}">LogIn</a>
+				<a th:href="@{/member/joinMember}">Join Us</a>
+			</a>
+			<a th:unless="${session.admin}">
+				<a class="icon" href="/orderItem/viewCartMemNum"><img id="cart" src="../img/cart.png" alt="cart"></a>
+            </a>
+            
+        </div>
+    </div>
+    		<div id="categoryDiv">
+			<a href="/" class="categoryLink">메인 화면</a><span class="ten"> ● </span>
+			<a href="/item/search" class="categoryLink">상품 페이지</a>
+			<span class="ten"> ● </span>
+			<span style="color: gray;">상품 수정 페이지</span>
+		</div>
+    <div style="text-align: center; height: auto; margin-left: 32%">
+    <br><br>
+	<th:block th:each="contentView : ${contentView}">
+	<div style="float: left; width:200px; height: 250px; margin-left:20px; border: 1px solid;">
+	<img th:src="@{/img/}+${contentView.itemImage}+@{.png}" id="imgDiv" style="width:80%; height:80%; margin-top:10%;">
+	</div>
+		<form method="get" id="frm" action="update" style="float: left; height: auto; margin-left: 3%">
+			<input type="hidden" name="itemNum" th:value="${contentView.itemNum}">
+			상품명 <input type="text" name="itemName" id="itemName"
+				th:value="${contentView.itemName}"> <br> <br>
+			<ul class="content-size">
+				<li><input type="text" name="itemPrice" id="itemPrice"
+					th:value="${contentView.itemPrice}">원</li>
+				<li
+					style="font-style: italic; font-size: 1.1em; text-decoration: underline;">Size</li>
+				<li><input type="radio" name="itemSize" id="XS" value="XS"
+				th:checked="${contentView.itemSize=='XS'}"><label
+					for="XS">XS</label></li>
+				<li><input type="radio" name="itemSize" id="S" value="S"
+				th:checked="${contentView.itemSize=='S'}"><label
+					for="S">S</label></li>
+				<li><input type="radio" name="itemSize" id="M" value="M"
+				th:checked="${contentView.itemSize=='M'}"><label
+					for="M">M</label></li>
+				<li><input type="radio" name="itemSize" id="L" value="L"
+				th:checked="${contentView.itemSize=='L'}"><label
+					for="L">L</label></li>
+				<li><input type="radio" name="itemSize" id="XL" value="XL"
+				th:checked="${contentView.itemSize=='XL'}"><label
+					for="XL">XL</label></li>
+			</ul>
+			<br>이미지 번호 <input type="text"
+				name="itemImage" id="itemImage" th:value="${contentView.itemImage}"
+				onchange='printImage()'>
+			<br> <br> 색 (현재 선택한 색 : <span id="isColor">없음</span>)
+			<ul class="content-color">
+				<li><input type="radio" name="itemColor" id="black"
+					value="BLACK" onclick="getRadioText(event)"
+					th:checked="${contentView.itemColor=='BLACK'}"><label
+					for="black" class="itemColor" title="BLACK"></label></li>
+				<li><input type="radio" name="itemColor" id="white"
+					value="WHITE" onclick="getRadioText(event)"
+					th:checked="${contentView.itemColor=='WHITE'}"><label
+					for="white" class="itemColor" title="WHITE"></label></li>
+				<li><input type="radio" name="itemColor" id="red" value="RED"
+					onclick="getRadioText(event)"
+					th:checked="${contentView.itemColor=='RED'}"><label for="red"
+					class="itemColor" title="RED"></label></li>
+				<li><input type="radio" name="itemColor" id="orange"
+					value="ORANGE" onclick="getRadioText(event)"
+					th:checked="${contentView.itemColor=='ORANGE'}"><label
+					for="orange" class="itemColor" title="ORANGE"></label></li>
+				<li><input type="radio" name="itemColor" id="yellow"
+					value="YELLOW" onclick="getRadioText(event)"
+					th:checked="${contentView.itemColor=='YELLOW'}"><label
+					for="yellow" class="itemColor" title="YELLOW"></label></li>
+				<li><input type="radio" name="itemColor" id="green"
+					value="GREEN" onclick="getRadioText(event)" 
+					th:checked="${contentView.itemColor=='GREEN'}"><label
+					for="green" class="itemColor" title="GREEN"></label></li>
+				<li><input type="radio" name="itemColor" id="blue" value="BLUE"
+					onclick="getRadioText(event)"
+					th:checked="${contentView.itemColor=='BLUE'}"><label for="blue"
+					class="itemColor" title="BLUE"></label></li>
+				<li><input type="radio" name="itemColor" id="navy" value="NAVY"
+					onclick="getRadioText(event)"
+					th:checked="${contentView.itemColor=='NAVY'}"><label for="navy"
+					class="itemColor" title="NAVY"></label></li>
+				<li><input type="radio" name="itemColor" id="purple"
+					value="PURPLE" onclick="getRadioText(event)" 
+					th:checked="${contentView.itemColor=='PURPLE'}"><label
+					for="purple" class="itemColor" title="PURPLE"></label></li>
+				<li><input type="radio" name="itemColor" id="gray" value="GRAY"
+					onclick="getRadioText(event)"
+					th:checked="${contentView.itemColor=='GRAY'}"><label for="gray"
+					class="itemColor" title="GRAY"></label></li>
+			</ul>
+			<script type="text/javascript" th:inline="javascript">
+			var colorChecked = [[${contentView.itemColor}]];
+			</script>
+		<br>카테고리
+	<select name="itemCategory" id="itemCategory">
+     <option value="Outer" th:selected="${contentView.itemCategory=='Outer'}">Outer</option>
+     <option value="Skirt" th:selected="${contentView.itemCategory=='Skirt'}">Skirt</option>
+     <option value="Pants" th:selected="${contentView.itemCategory=='Pants'}">Pants</option>
+     <option value="Blouse" th:selected="${contentView.itemCategory=='Blouse'}">Blouse</option>
+     <option value="Shirts" th:selected="${contentView.itemCategory=='Shirts'}">Shirts</option>
+     <option value="Accessory" th:selected="${contentView.itemCategory=='Accessory'}">Accessory</option>
+     <option value="Shoes" th:selected="${contentView.itemCategory=='Shoes'}">Shoes</option>
+     <option value="Bag" th:selected="${contentView.itemCategory=='Bag'}">Bag</option>
+	</select>
+	 <br><br>
+		</form>
+	</th:block>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<div style="float: left; margin-left: 22%">
+	<button onclick="submit()">등록하기</button>
+	<a href="search"><button>돌아가기</button></a>
+	</div>
+	</div>
+	 <div class="footer">
+        <div class="footer1">ABOUT US</div>
+  	   <div class="footer2">It's the trend that is not in the world</div>
+        <div class="footer3">
+            <p>서울시 서초구 강남대로 459 402호 백구시보</p>
+            <p>010-1234-1234</p>
+            <p>195@google.com</p>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	function printImage()  {
+		var imgVal = document.getElementById('itemImage').value
+		document.getElementById('imgDiv').src =  "../img/"+imgVal+".png";
+		//document.getElementById('imgDiv').style = "width:80%; height:80%; margin-top:10%;";
+	}
+	
+	document.getElementById('isColor').innerText = colorChecked;
+	
+	function getRadioText(event) {
+		var radioId = event.target.id.toUpperCase();
+		document.getElementById('isColor').innerText = radioId;
+	}
+	
+	function submit(){
+		var itemName = document.getElementById('itemName').value.trim();
+		var itemPrice = document.getElementById('itemPrice').value.trim();
+		var itemImage = document.getElementById('itemImage').value.trim();
+		var itemCategory = document.getElementById('itemCategory').value.trim();
+		var itemColor = document.getElementById('isColor').innerText;
+		
+		var sizeNodeList = document.getElementsByName('itemSize');
+		var itemSize = "";
+		sizeNodeList.forEach((node) => {
+    if(node.checked)  {
+      itemSize = node.value;
+    }
+  });
+
+		if(itemName!=""&&itemPrice!=""&&itemColor!="없음"&&itemSize!=""&&itemImage!=""&&itemCategory!=""){
+			alert("성공!");
+			document.getElementById('frm').submit();
+		} else{
+			alert("입력 혹은 선택되지 않은 항목이 있습니다.");
+		}
+
+	}
+	 let app = new Vue({
+     	  el : '#searchItem',
+     	  data(){
+    	     return{
+           dropdown:'dropdown',
+           toggle:{
+             on : false
+           }
+         };
+       },
+       methods :{
+     	  searchclick(){
+             this.toggle.on =! this.toggle.on;
+         }
+       }
+     });
+     document.getElementById("logo").addEventListener('click', function () {
+           location.href = "/";
+     });
+     document.getElementById("aboutus").addEventListener('click', function () {
+     	location.href = "/aboutus";
+     });
+     document.getElementById("products").addEventListener('click', function () {
+     	location.href="/item/search" 
+     });
+</script>
+</html>

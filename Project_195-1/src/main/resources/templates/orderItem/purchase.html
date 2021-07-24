@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Purchase</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<style>
+
+table.type11 {
+  border-collapse: separate;
+  border-spacing: 1px;
+  text-align: center;
+  line-height: 1.5;
+  margin: 20px 10px;
+  height: auto;
+}
+table.type11 th {
+  width: 220px;
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #fff;
+  background: #ce4869 ;
+}
+table.type11 td {
+  width: 220px;
+  padding: 10px;
+  vertical-align: top;
+  border-bottom: 1px solid #ccc;
+  background: #eee;
+}
+
+
+</style>
+
+</head>
+<body>
+<div id="searchItem" class="searchItem">
+				<a @click="searchclick" name="button"> <img id="search" src="../img/search.png" alt="search"></a>
+ 				<div :class="[dropdown,toggle]">
+ 				<ul>
+ 				<form action="/item/searchItem?" method="get">
+					<select name="categorySearchBar">
+						<option value="Outer" selected>Outer</option>
+						<option value="Skirt">Skirt</option>
+						<option value="Pants">Pants</option>
+						<option value="Blouse">Blouse</option>
+						<option value="Shirts">Shirts</option>
+						<option value="Accessory">Accessory</option>
+						<option value="Shoes">Shoes</option>
+						<option value="Bag">Bag</option>
+					</select>
+					<input class="searchform" type="text" name="keyword" id="keyword">
+					<button type="submit">검색</button>
+				</form>
+  				</ul>
+  				</div>
+	</div>
+	<div class="header">
+		<img id="logo" src="../img/백구시보.png" alt="logo"> <input
+			type="checkbox" id="chk">
+		<div class="menu">
+			<a id="products">PRODUCTS</a> <a id="aboutus">ABOUT US</a> <a
+				class="icon" href="/orderItem/viewCartMemNum">
+		<a th:if="${session.user}">
+				<a class="icon" th:href="@{/member/mainMember}"><img id="user" src="../img/user.png" alt="user"></a>
+			</a>
+			<a th:if="${session.user}!=null or ${session.admin}!=null">
+				<a id="log" th:href="@{/member/logoutMember}">LogOut</a>
+			</a>
+			<a th:if="${session.user}==null and ${session.admin}==null">
+				<a th:href="@{/member/loginMember}">LogIn</a>
+				<a th:href="@{/member/joinMember}">Join Us</a>
+			</a>
+			<a th:unless="${session.admin}">
+				<a class="icon" href="/orderItem/viewCartMemNum"><img id="cart" src="../img/cart.png" alt="cart"></a>
+            </a>
+
+		</div>
+	</div>
+
+</div>
+	<div class="pagepp">
+		<div class="memInfo">
+			<p id="ordermem">주문자</p>
+			<br>
+
+			<table class="type11">
+				<tbody>
+					<tr>
+						<th>성 명</th>
+						<td><input type="text" style="text-align:left; width:300px; height:40px; background: #eee; letter-spacing: 1px" 
+						    readonly="readonly" name="name"
+							id="name" th:value="${session.user.name}" /></td>
+							
+					</tr>
+					<tr>
+						<th>전화번호</th>
+						<td><input type="text" style="text-align:left; width:300px; height:40px; background: #eee; letter-spacing: 1px" 
+						    readonly="readonly" name="phNum"
+							id="phNum" th:value="${session.user.phNum}" /></td>
+
+					</tr>
+					<tr>
+						<th>주 소</th>
+						<td><input type="text" style="text-align:left; width:300px; height:40px; background: #eee; letter-spacing: 1px"
+						    readonly="readonly" name="address"
+							id="address1" th:value="${session.user.address}" /></td>
+							
+					</tr>
+					<tr>
+						<th>결제수단</th>
+						<td><input type="text" style="text-align:left; width:300px; height:40px; background: #eee; letter-spacing: 1px"
+						    readonly="readonly" name="card"
+							id="card" th:value="${session.user.card}" /></td>
+							
+					</tr>
+				</tbody>
+			</table>
+			<div style="text-align: center;">
+		
+			   
+				<button id="back" class="button">뒤로 가기</button>
+				<button id="purchase" class="button">결제하기</button>
+			</div>
+
+		</div>
+		<div class="itemInfo">
+			<p id="orderitem">주문 상품</p>
+			<br>
+			<table class="type11" id="ta">
+				<thead>
+					<tr>
+						<th>상품 사진</th>
+						<th>주문 번호</th>
+						<th>상품 정보</th>
+						<th>주문 개수</th>
+						<th>총 가격</th>
+					</tr>
+				</thead>
+				<tbody th:each="viewCart : ${viewCart}">
+					<tr>
+						<td><img th:src="@{/img/}+${viewCart.itemImage}+@{.png}" th:alt="이미지"
+				width="80px" height="80px" vspace="50px;" hspace="50px;"></td>
+						<td><a th:text="${viewCart.orderNum}"></a></td>
+						<td><a
+							th:text="${viewCart.itemName}+', '+${viewCart.itemColor}+', '+${viewCart.itemSize}"></a></td>
+						<td><a th:text="${viewCart.orderCount}"></td>
+						<td><a class="price"
+							th:text="${viewCart.itemPrice*viewCart.orderCount}"></a></td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="type12">
+			 <tbody>
+			    <tr><th>총 상품 가격</th> 
+			        <td><a id="middelTotal" value=""></a>원</td>
+			    </tr>
+			
+			    <tr><th>배송비 </th>
+			        <td><a>3000원 	</a></td>
+			    </tr>
+			
+			<tr><th>총 상품 가격</th> 
+			        <td><a id="totalPrice" ></a>원</td>
+			    </tr>
+			
+			  </tbody>
+		    </table>
+		</div>
+	</div>
+	<div class="footer" style="float: left; width: 100%;">
+		<div class="footer1">ABOUT US</div>
+		<div class="footer2">It's the trend that is not in the world</div>
+		<div class="footer3">
+			<p>서울시 서초구 강남대로 459 402호 백구시보</p>
+			<p>010-1234-1234</p>
+			<p>195@google.com</p>
+		</div>
+	</div>
+	<script>
+  	  let app = new Vue({
+      	  el : '#searchItem',
+      	  data(){
+     	     return{
+            dropdown:'dropdown',
+            toggle:{
+              on : false
+            }
+          };
+        },
+        methods :{
+      	  searchclick(){
+              this.toggle.on =! this.toggle.on;
+          }
+        }
+      });
+      document.getElementById("logo").addEventListener('click', function () {
+            location.href = "/";
+      });
+      document.getElementById("aboutus").addEventListener('click', function () {
+      	location.href = "/aboutus";
+      });
+      document.getElementById("products").addEventListener('click', function () {
+      	location.href="/item/search" 
+      });
+      document.querySelector("#back").addEventListener('click', function(){
+  		history.back();
+  	})
+			var list = document.querySelectorAll('.price');
+			var total = 0;
+			for(var i=0; i<list.length; i++){
+				var temp=Number(list[i].innerText);
+				total += temp;
+			}
+			
+			document.getElementById('middelTotal').innerText = total;
+			
+			document.getElementById('totalPrice').innerText = total+3000; 
+			
+			document.getElementById('purchase').addEventListener('click', function(){
+				var conf= confirm("정말로 결제 하시겠습니까?");
+				if (conf==true) {
+				location.href="/orderItem/afterPurchase";
+				}
+				else{
+					alert("결제가 취소되었습니다");
+					return false;
+				}
+			});
+			
+			
+  	</script>
+</body>
+</html>

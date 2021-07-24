@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>After Purchase</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<style>
+#result {
+	text-align: center;
+}
+#afterPurchaseTable {
+	border-collapse: separate;
+	border-spacing: 0px 10px;
+}
+#myPurchaseList, #main {
+	height: 25px;
+	width: 130px;
+	padding: 0;
+	margin: 5px;
+}
+</style>
+</head>
+<body>
+<div id="searchItem" class="searchItem">
+				<a @click="searchclick" name="button"> <img id="search" src="../img/search.png" alt="search"></a>
+ 				<div :class="[dropdown,toggle]">
+ 				<ul>
+ 				<form action="/item/searchItem?" method="get">
+					<select name="categorySearchBar">
+						<option value="Outer" selected>Outer</option>
+						<option value="Skirt">Skirt</option>
+						<option value="Pants">Pants</option>
+						<option value="Blouse">Blouse</option>
+						<option value="Shirts">Shirts</option>
+						<option value="Accessory">Accessory</option>
+						<option value="Shoes">Shoes</option>
+						<option value="Bag">Bag</option>
+					</select>
+					<input class="searchform" type="text" name="keyword" id="keyword">
+					<button type="submit">검색</button>
+				</form>
+  				</ul>
+  				</div>
+	</div>
+	<div class="header">
+		<img id="logo" src="../img/백구시보.png" alt="logo"> <input
+			type="checkbox" id="chk">
+		<div class="menu">
+			<a id="products">PRODUCTS</a> <a id="aboutus">ABOUT US</a> <a
+				class="icon" href="/orderItem/viewCartMemNum">
+		<a th:if="${session.user}">
+				<a class="icon" th:href="@{/member/mainMember}"><img id="user" src="../img/user.png" alt="user"></a>
+			</a>
+			<a th:if="${session.user}!=null or ${session.admin}!=null">
+				<a id="log" th:href="@{/member/logoutMember}">LogOut</a>
+			</a>
+			<a th:if="${session.user}==null and ${session.admin}==null">
+				<a th:href="@{/member/loginMember}">LogIn</a>
+				<a th:href="@{/member/joinMember}">Join Us</a>
+			</a>
+			<a th:unless="${session.admin}">
+				<a class="icon" href="/orderItem/viewCartMemNum"><img id="cart" src="../img/cart.png" alt="cart"></a>
+            </a>
+
+		</div>
+	</div>
+
+</div>
+
+
+	<div id="afterPurchase">
+	
+		<h1>주문 내역</h1>
+		
+		<table id="afterPurchaseTable">
+			<tbody th:each="viewCart : ${viewCart}">
+				<tr>
+					<td width="20%"><img th:src="@{../img/}+${viewCart.itemImage}+@{.png}"
+						th:alt="이미지" width="50px" height="50px"></td>
+					<td width="50%"><span
+						th:utext="${viewCart.itemName} +'<br>'+${viewCart.itemColor}+', '+${viewCart.itemSize }+', '+${viewCart.orderCount}"></span></td>
+					<td width="20%"><span class="price" th:text="${viewCart.itemPrice*viewCart.orderCount}"></span><a>원</a></td>
+				</tr>
+				</tr>
+			</tbody>
+		</table>
+
+		<br>
+		<hr size="2" width="100%" align="center" color="black">
+		<br>
+		<div id="result">
+			상품 가격: <a id="middelTotal" value=""></a><a>원</a><br>
+			<br> <a>배송비: 3000원 </a><br> <br> 
+			<hr size="2" width="100%" align="center" color="black">
+			<br>
+			구매 가격: <a id="totalPrice"></a><a>원</a>
+		</div>
+		<div id="address">
+			배송지 : <a th:text="${session.user.address}"></a>
+		</div>
+
+		<hr size="2" width="100%" align="center" color="black">
+
+		<div id="bye">
+			
+			<p>주문해주셔서 감사합니다.</p> <br>
+			<button id="myPurchaseList">구매목록으로 이동</button>
+			<br>
+			<button id="main">메인으로 이동</button>
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="footer1">ABOUT US</div>
+		<div class="footer2">It's the trend that is not in the world</div>
+		<div class="footer3">
+			<p>서울시 서초구 강남대로 459 402호 백구시보</p>
+			<p>010-1234-1234</p>
+			<p>195@google.com</p>
+		</div>
+	</div>
+
+	<script>
+		document.getElementById("myPurchaseList").addEventListener('click', function() {
+			location.href = "/orderItem/myPurchaseList";
+		});
+		document.getElementById("main").addEventListener('click', function() {
+			location.href = "/index";
+		});
+		
+		var list = document.querySelectorAll('.price');
+		var total = 0;
+		for(var i=0; i<list.length; i++){
+			var temp=Number(list[i].innerText);
+			total += temp;
+		}
+		
+		document.getElementById('middelTotal').innerText = total;
+		
+		document.getElementById('totalPrice').innerText = total+3000; 
+		
+	  	  let app = new Vue({
+	      	  el : '#searchItem',
+	      	  data(){
+	     	     return{
+	            dropdown:'dropdown',
+	            toggle:{
+	              on : false
+	            }
+	          };
+	        },
+	        methods :{
+	      	  searchclick(){
+	              this.toggle.on =! this.toggle.on;
+	          }
+	        }
+	      });
+	      document.getElementById("logo").addEventListener('click', function () {
+	            location.href = "/";
+	      });
+	      document.getElementById("aboutus").addEventListener('click', function () {
+	      	location.href = "/aboutus";
+	      });
+	      document.getElementById("products").addEventListener('click', function () {
+	      	location.href="/item/search" 
+	      });
+
+	</script>
+
+</body>
+</html>

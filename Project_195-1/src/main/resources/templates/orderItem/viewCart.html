@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>View Cart</title>
+
+<link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>	
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>    
+
+
+</head>
+<body>
+ <script>
+ var sessionMemNum = String([[${session.user.memNum}]]);
+ </script>
+
+<div id="searchItem" class="searchItem">
+				<a @click="searchclick" name="button"> <img id="search" src="../img/search.png" alt="search"></a>
+ 				<div :class="[dropdown,toggle]">
+ 				<ul>
+ 				<form action="/item/searchItem?" method="get">
+					<select name="categorySearchBar">
+						<option value="Outer" selected>Outer</option>
+						<option value="Skirt">Skirt</option>
+						<option value="Pants">Pants</option>
+						<option value="Blouse">Blouse</option>
+						<option value="Shirts">Shirts</option>
+						<option value="Accessory">Accessory</option>
+						<option value="Shoes">Shoes</option>
+						<option value="Bag">Bag</option>
+					</select>
+					<input class="searchform" type="text" name="keyword" id="keyword">
+					<button type="submit">검색</button>
+				</form>
+  				</ul>
+  				</div>
+	</div>
+	<div class="header">
+		<img id="logo" src="../img/백구시보.png" alt="logo"> <input
+			type="checkbox" id="chk">
+		<div class="menu">
+			<a id="products">PRODUCTS</a> <a id="aboutus">ABOUT US</a> <a
+				class="icon" href="/orderItem/viewCartMemNum">
+		<a th:if="${session.user}">
+				<a class="icon" th:href="@{/member/mainMember}"><img id="user" src="../img/user.png" alt="user"></a>
+			</a>
+			<a th:if="${session.user}!=null or ${session.admin}!=null">
+				<a id="log" th:href="@{/member/logoutMember}">LogOut</a>
+			</a>
+			<a th:if="${session.user}==null and ${session.admin}==null">
+				<a th:href="@{/member/loginMember}">LogIn</a>
+				<a th:href="@{/member/joinMember}">Join Us</a>
+			</a>
+			<a th:unless="${session.admin}">
+				<a class="icon" href="/orderItem/viewCartMemNum"><img id="cart" src="../img/cart.png" alt="cart"></a>
+            </a>
+
+		</div>
+	</div>
+
+</div>
+    <div>
+    <h1 style="text-align: center; height: auto; margin-top:40px; margin-bottom:20px;">장바구니</h1>
+ 
+	<table class="type11">
+		<thead>
+			<tr>
+				<th scope="cols"><input type="checkbox" name="allCheck" id="allCheck"/>전체 선택</th>
+				<th scope="cols">상품이미지</th>
+				<th scope="cols">상품명</th>
+				<th scope="cols">상품컬러</th>
+				<th scope="cols">상품사이즈</th>
+				<th scope="cols">상품가격</th>
+				<th scope="cols">상품수량</th>
+			</tr>
+		</thead>
+		<tbody th:each="viewCart : ${viewCart}">
+			<tr>
+				<td ><input type="checkbox" name="rowCheck" th:value="${viewCart.orderNum}" /></td>
+				<td><img th:src="@{/img/}+${viewCart.itemImage}+@{.png}" th:alt="이미지"
+				width="80px" height="80px" vspace="50px;" hspace="50px;"></td>
+				
+				<td><span th:text="${viewCart.itemName }"></span></td>
+				<td><span th:text="${viewCart.itemColor }"></span></td>
+				<td><span th:text="${viewCart.itemSize }"></span></td>
+				<td><span th:text="${viewCart.itemPrice }"></span></td>
+				<td><button type="button" class="smallButton" onclick="fnCalCount('m', this);">-</button>
+				<input type="text" name="orderCount" style="text-align:center; width:50px; height:30px; letter-spacing: -5px" th:value="${viewCart.orderCount }" readonly="readonly"/>
+				<button type="button" class="smallButton" onclick="fnCalCount('p', this);">+</button></td>
+			</tr>
+		</tbody>
+	</table>
+ 
+ <div style="text-align: center; margin-top:30px;">
+ 
+	<a th:if="${viewCart}">
+		<input type="button" class="button" value="선택 항목 삭제" onclick="deleteValue()">
+		<input type="button" class="button" value="상품 수량 업데이트" onclick="updateValue()">
+	</a>
+	
+	<div th:unless="${viewCart}">
+		장바구니에 상품이 없습니다.
+	</div>
+	
+	<button id="purchase" class="button">구매하기</button>
+	<button id="back" class="button">뒤로 가기</button>
+	
+	</div>
+</div>
+	<div class="last">
+       	 <div class="footer1">ABOUT US</div>
+         <div class="footer2">It's the trend that is not in the world</div>
+        <div class="footer3">
+            <p>서울시 서초구 강남대로 459 402호 백구시보</p>
+            <p>010-1234-1234</p>
+            <p>195@google.com</p>
+        </div>
+    </div>
+    
+    <script th:inline="javascript">
+    
+    document.getElementById("purchase").addEventListener('click', function(){
+    	/*<![CDATA[*/
+        if( /*[[ ${viewCart} ]]*/){
+        	console.log("asdf");
+        	location.href="/orderItem/purchase";
+        } else{
+        	alert("구매할 상품이 없습니다.");
+        }
+		/*]]>*/	
+    });
+    
+    document.getElementById("back").addEventListener('click', function(){
+    	history.back();
+    });
+
+    
+    $(function(){
+		var chkObj = document.getElementsByName("rowCheck");
+		var rowCnt = chkObj.length;
+		
+		$("input[name='allCheck']").click(function(){
+			var chk_listArr = $("input[name= 'rowCheck']");
+			for (var i=0; i<chk_listArr.length; i++){
+				chk_listArr[i].checked = this.checked;
+		    }
+		});
+		$("input[name='rowCheck']").click(function(){
+			if($("input[name='rowCheck']:checked").length == rowCnt){
+				$("input[name='allCheck']")[0].checked = true;
+			}
+			else{
+				$("input[name= 'allCheck']")[0].checked = false;
+			}    			
+		});
+	});
+    
+	function deleteValue(){
+		var url = "delete";
+		var valueArr = new Array();
+		var list = $("input[name='rowCheck']");
+		for(var i = 0; i < list.length; i++){
+			if(list[i].checked){
+				valueArr.push(list[i].value);
+			}
+		}
+		if (valueArr.length == 0){
+			alert("선택된 항목이 없습니다.");
+		}
+		else{
+			var chk = confirm("정말 삭제하시겠습니까?");
+			$.ajax({
+				url : url,
+				type : 'POST',
+				traditional : true,
+				data : {
+					valueArr : valueArr
+				},
+				success: function(jdata){
+					if(jdata = 1) {
+						alert("삭제 성공");
+					}
+					else{
+						alert("삭제 실패");
+					}
+				}
+			});	
+		}
+		setTimeout(function(){
+    		location.href="/orderItem/viewCartMemNum";
+		}, 500);
+    }	
+	
+    function updateValue(){
+		var url = "update";
+		// 상품수량 값들을 저장할 배열
+		var listArr = new Array();
+		// 체크박스 값 == orderNum 값들을 저장할 배열
+		var rowCheckArr = new Array();
+		//var list = $("input[name='orderCount']");
+		var list = document.getElementsByName("orderCount");
+		var rowCheck = document.getElementsByName("rowCheck");
+		for(var i = 0; i < rowCheck.length; i++){
+				//상품 수량 값들
+				listArr.push(list[i].value);
+				// 체크박스 값들
+				rowCheckArr.push(rowCheck[i].value);
+		}		
+		// if confirm { 확인 눌렀을 때 } else{ 취소 눌렀을 때}
+		if(confirm("정말 업데이트 하시겠습니까?") == true){
+			$.ajax({
+				url : url,
+				type : 'POST',
+				traditional : true,
+				data : {
+					// controller에서 받을이름 : 보낼 값을 저장한 변수식
+					list : listArr,
+					rowCheck : rowCheckArr
+				},
+				success: function(jdata){
+					if(jdata = 1) {
+						alert("업데이트 성공");
+					}
+					else{
+						alert("업데이트 실패");
+					}
+				}
+			});	
+			}
+			else{
+			  return false;
+			} 		
+		setTimeout(function(){
+    		location.href="/orderItem/viewCartMemNum"; 
+		}, 2000);
+    }
+    
+    function fnCalCount(type, ths){
+        var $input = $(ths).parents("td").find("input[name='orderCount']");
+        var tCount = Number($input.val());     
+        if(type=='p'){
+            if(tCount < 999) 
+            	$input.val(Number(tCount)+1);
+        }else{
+            if(tCount >0) 
+            	$input.val(Number(tCount)-1);
+        }
+    }
+    let app = new Vue({
+    	  el : '#searchItem',
+    	  data(){
+   	     return{
+          dropdown:'dropdown',
+          toggle:{
+            on : false
+          }
+        };
+      },
+      methods :{
+    	  searchclick(){
+            this.toggle.on =! this.toggle.on;
+        }
+      }
+    });
+    document.getElementById("logo").addEventListener('click', function () {
+          location.href = "/";
+    });
+    document.getElementById("aboutus").addEventListener('click', function () {
+    	location.href = "/aboutus";
+    });
+    document.getElementById("products").addEventListener('click', function () {
+    	location.href="/item/search" 
+    });
+  
+  	</script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Content View</title>
+<style type="text/css">
+.image-box {
+   float: left;
+   height: auto;
+   width: auto;
+   margin-top: 50px;
+   margin-left:30%;
+}
+
+.content-box {
+   float: left;
+   padding-left:50px;
+   height: auto;
+   width: auto;
+}
+
+.money-box {
+   display: inline-block;
+   width: 200px;
+}
+
+.Size {
+   font-size: 1.2em;
+   text-decoration: underline;
+}
+
+.Size:hover+div#Size {
+   visibility: visible;
+}
+
+#Size {
+   visibility: hidden;
+   text-align: right;
+   font-size: 1.3em;
+   font-style: italic;
+   width: 225px;
+}
+
+button#cartBtn {
+   border: none;
+   background-color: #93dc80;
+   color: white;
+   display: inline-block;
+   font-size: 1.5em;
+   text-align: center;
+   width: 300px;
+   height: 50px;
+   padding: 10px 0;
+}
+
+button#purchaseBtn {
+   border: none;
+   background-color: #ffe168;
+   color: white;
+   display: inline-block;
+   font-size: 1.5em;
+   text-align: center;
+   width: 400px;
+   height: 50px;
+   padding: 10px 0;
+}
+
+#cartBtn, #cartBtn::after, #purchaseBtn, #purchaseBtn::after {
+   -webkit-transition: all 0.5s;
+   -moz-transition: all 0.5s;
+   -o-transition: all 0.5s;
+   transition: all 0.5s;
+}
+
+#cartBtn:hover {
+   color: #93dc80;
+   background: white;
+}
+
+#purchaseBtn:hover {
+   color: #ffe168;
+   background: white;
+}
+
+#qty {
+   text-align: center;
+   border: none;
+   width: 30px;
+   height: 10px;
+}
+
+#plus {
+   border-left: 1px solid black;
+}
+
+#minus {
+   border-right: 1px solid black;
+}
+
+.btn {
+   border: none;
+   background-color: white;
+   width: 35px;
+   height: 15px;
+}
+
+#form {
+   border: 1px solid black;
+}
+
+.btn, #qty, #cart:active {
+   border: none;
+}
+
+#categoryDiv{
+background-color: #f5f5f5;
+font-size:0.9em;
+height: 50px;
+padding: 13px 60px;
+}
+
+.categoryLink{
+color: black;
+text-decoration: none;
+}
+
+.ten{
+color: gray;
+}
+
+button.buttonAdmin{
+   -webkit-transition: all 1000ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -moz-transition: all 1000ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -ms-transition: all 1000ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -o-transition: all 1000ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   transition: all 1000ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   margin: 20px auto;
+   margin-right:20px;
+   max-width: 180px;
+   text-decoration: none;
+   border : none;
+   border-radius: 4px;
+   padding: 10px 20px;
+   color: rgba(30, 22, 54, 0.6);
+}
+
+button.buttonAdmin:hover {
+   color: rgba(255, 255, 255, 0.85);
+   box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+}
+
+</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+   <div id="searchItem" class="searchItem">
+            <a @click="searchclick" name="button"> <img id="search" src="../img/search.png" alt="search"></a>
+             <div :class="[dropdown,toggle]">
+             <ul>
+            <form action="/item/searchItem?" method="get">
+               <select name="categorySearchBar">
+                  <option value="Outer" selected>Outer</option>
+                  <option value="Skirt">Skirt</option>
+                  <option value="Pants">Pants</option>
+                  <option value="Blouse">Blouse</option>
+                  <option value="Shirts">Shirts</option>
+                  <option value="Accessory">Accessory</option>
+                  <option value="Shoes">Shoes</option>
+                  <option value="Bag">Bag</option>
+               </select>
+               <input class="searchform" type="text" name="keyword" id="keyword">
+               <button type="submit">검색</button>
+            </form>
+              </ul>
+              </div>
+   </div>
+    <div class="header">
+        <img id="logo" src="../img/백구시보.png" alt="logo">
+        <input type="checkbox" id="chk">
+        <div class="menu">
+            <a id="products">PRODUCTS</a>
+            <a id="aboutus">ABOUT US</a>
+            
+         <a th:if="${session.user}">
+				<a class="icon" th:href="@{/member/mainMember}"><img id="user" src="../img/user.png" alt="user"></a>
+			</a>
+			<a th:if="${session.user}!=null or ${session.admin}!=null">
+				<a id="log" th:href="@{/member/logoutMember}">LogOut</a>
+			</a>
+			<a th:if="${session.user}==null and ${session.admin}==null">
+				<a th:href="@{/member/loginMember}">LogIn</a>
+				<a th:href="@{/member/joinMember}">Join Us</a>
+			</a>
+			<a th:unless="${session.admin}">
+				<a class="icon" href="/orderItem/viewCartMemNum"><img id="cart" src="../img/cart.png" alt="cart"></a>
+            </a>
+            
+        </div>
+    </div>
+   <th:block th:each="contentView : ${contentView}">
+      <div id="categoryDiv">
+         <a href="/" class="categoryLink">메인 화면</a><span class="ten"> ● </span>
+         <a href="/item/search" class="categoryLink">상품 페이지</a>
+         <span class="ten"> ● </span>
+         <a th:href="@{search?itemCategory=}+${contentView.itemCategory}" class="categoryLink">
+         <span th:text="${contentView.itemCategory}"></span>
+         </a><span class="ten"> ● </span><span th:text="${contentView.itemName}" style="color: gray;"></span>
+      </div>
+      <div style="float: left; width: 100%;">
+      <div class='image-box' style="padding-top: 50px;">
+         <img th:src="@{/img/}+${contentView.itemImage}+@{.png}" th:alt="이미지"
+            width="250px" height="250px" vspace="50px;" hspace="50px;">
+      </div>
+      <div class='content-box' style="padding-top: 10px;">
+         <div align="left">
+         <button id="update" th:if="${session.admin}" class="buttonAdmin">정보 수정</button>
+         <!-- <a th:href="@{delete?itemNum=}+${contentView.itemNum}"> -->
+         <button id="delete" th:if="${session.admin}" class="buttonAdmin">상품 삭제</button>
+         <!-- </a> -->
+         </div>
+         
+         
+         <script>
+            var delBtn = document.getElementById("delete");
+            var delHref = [[${contentView.itemNum}]];
+         
+            var updateBtn = document.getElementById("update");
+            var updateHref = [[${contentView.itemNum}]];
+
+            delBtn.addEventListener('click', function(){
+               if (confirm("상품을 삭제하시겠습니까?") == true){
+                  location.href = "delete?itemNum="+delHref;
+                }else{
+                    return false;
+                }
+            });
+         
+            updateBtn.addEventListener('click', function(){
+               location.href = "updateForm?itemNum="+updateHref;
+            });
+         </script>
+         <br>
+         <p th:text="|&nbsp&nbsp${contentView.itemColor}|" style="font-size:0.8em;">
+         <p th:text="|&nbsp${contentView.itemName}|" style="font-size: 1.5em;"></p>
+         <div>
+            <span
+               th:text="|&nbsp&nbsp${#numbers.formatInteger(contentView.itemPrice,3,'COMMA')}&nbsp원|"
+               class="money-box"></span> <span class="Size">Size</span>
+            <div id="Size" th:text="${contentView.itemSize}"></div>
+         </div>
+         <br> <br>
+         <form method="GET" action="addCart">
+            <input type="hidden" name="itemNum"
+               th:value="${contentView.itemNum}"> <input type="hidden"
+               name="itemName" th:value="${contentView.itemName}">
+            &nbsp&nbsp
+         </form>
+         <span id="form"> <input type="button" value="-" id="minus"
+            class="btn"> <input type="text" name="orderCount" value="1"
+            id="qty" readonly="readonly"> <input type="button" value="+"
+            id="plus" class="btn">
+         </span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+         <button id="cartBtn">카트에 추가</button>
+         <br> <br> <br>
+         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+         <button id="purchaseBtn">즉시 구매하기</button>
+
+      </div>
+      </div>
+      <script>
+      var itemNumHREF = [[${contentView.itemNum}]];   
+      </script>
+   </th:block>
+  
+   <div class="footer" style="float: left">
+        <div class="footer1">ABOUT US</div>
+         <div class="footer2">It's the trend that is not in the world</div>
+        <div class="footer3">
+            <p>서울시 서초구 강남대로 459 402호 백구시보</p>
+            <p>010-1234-1234</p>
+            <p>195@google.com</p>
+        </div>
+    </div>
+</body>
+<script>
+   var cartBtn = document.getElementById("cartBtn");   
+   var purchaseBtn = document.getElementById("purchaseBtn");
+   
+ cartBtn.addEventListener('click', function(){
+    var orderCountHREF = document.getElementById("qty").value;
+   if(orderCountHREF==0){
+      alert("수량을 선택해주세요.");
+      return false;
+      }else{
+         location.href = "addCart?itemNum="+itemNumHREF+"&orderCount="+orderCountHREF;
+         if (confirm("장바구니에 등록되었습니다. 장바구니로 이동하시겠습니까?") == true){
+            location.href = "/orderItem/viewCartMemNum";
+          }else{
+            location.href = "contentView?itemNum="+itemNumHREF;
+          }
+      }
+});
+ 
+ purchaseBtn.addEventListener('click', function(){
+    var orderCountHREF = document.getElementById("qty").value;
+   if(orderCountHREF==0){
+      alert("수량을 선택해주세요.");
+      return false;
+      }else{
+         location.href = "addCart?itemNum="+itemNumHREF+"&orderCount="+orderCountHREF;
+         location.href = "/orderItem/purchase";
+      }
+});
+
+   var plus = document.getElementById("plus");
+   var minus = document.getElementById("minus");
+
+   plus.addEventListener('click', function(){
+      var many = document.getElementById("qty").value;
+      if(many<=999){
+         document.getElementById("qty").value ++;
+      } else{
+         alert("최대 999 !");
+      }
+   });
+   
+   minus.addEventListener('click', function(){
+      var many = document.getElementById("qty").value;
+      if(many>0){
+         document.getElementById("qty").value --;
+      }
+   });
+    let app = new Vue({
+         el : '#searchItem',
+         data(){
+           return{
+          dropdown:'dropdown',
+          toggle:{
+            on : false
+          }
+        };
+      },
+      methods :{
+         searchclick(){
+            this.toggle.on =! this.toggle.on;
+        }
+      }
+    });
+    document.getElementById("logo").addEventListener('click', function () {
+          location.href = "/";
+    });
+    document.getElementById("aboutus").addEventListener('click', function () {
+       location.href = "/aboutus";
+    });
+    document.getElementById("products").addEventListener('click', function () {
+       location.href="/item/search" 
+    });
+</script>
+</html>

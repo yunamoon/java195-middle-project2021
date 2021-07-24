@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Search</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
+
+<style type="text/css">
+button.buttonAdmin{
+	-webkit-transition: all 1000ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 1000ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 1000ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 1000ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	transition: all 1000ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	margin: 20px auto;
+	margin-right:200px;
+	max-width: 180px;
+	text-decoration: none;
+	border : none;
+	border-radius: 4px;
+	padding: 10px 20px;
+	color: rgba(30, 22, 54, 0.6);
+}
+
+button.buttonAdmin:hover {
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+}
+
+.left-box {
+	background: white;
+	float: left;
+	height: auto;
+	width: 20%;
+	font-size: 1.4em;
+}
+
+.right-box{
+float: left;
+height: auto;
+width: 80%;
+}
+
+.content-size {
+	width: auto;
+	margin-left: 45px;
+}
+
+.content-color {
+	width: auto;
+	margin-left: 45px;
+}
+
+.content-price {
+	width: auto;
+	margin-left: 20px;
+}
+
+.title {
+	text-align: center;
+	font-weight: bold;
+	background-color: #FFDDDD;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+.li {
+	margin: 5px;
+	padding: 0;
+	float: left;
+	list-style: none;
+}
+
+.liPrice {
+	list-style: none;
+	float: left;
+	padding: 0px;
+	margin-left: 35px;
+}
+
+.liCategory {
+	list-style: none;
+	margin-left: 10px;
+	float: left;
+}
+
+input {
+	display: none;
+}
+
+input.searchform{
+	display: inline;
+}
+
+#searchBtn {
+	width: 80px;
+	height: 40px;
+}
+
+input[name="itemColor"]+label {
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	border: 2px solid white;
+	cursor: pointer;
+}
+
+input[id="black"]+label {
+	background-color: black;
+}
+
+input[id="white"]+label {
+	background-color: #f5f2f2;
+}
+
+input[id="red"]+label {
+	background-color: red;
+}
+
+input[id="orange"]+label {
+	background-color: orange;
+}
+
+input[id="yellow"]+label {
+	background-color: yellow;
+}
+
+input[id="green"]+label {
+	background-color: green;
+}
+
+input[id="blue"]+label {
+	background-color: blue;
+}
+
+input[id="navy"]+label {
+	background-color: navy;
+}
+
+input[id="purple"]+label {
+	background-color: purple;
+}
+
+input[id="gray"]+label {
+	background-color: gray;
+}
+
+input[name="itemSize"]+label {
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	border: 2px solid white;
+	cursor: pointer;
+	background-color: white;
+	text-align: center;
+}
+
+label {
+	color: gray;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: blue;
+}
+
+input[name="itemPrice"]+label {
+	display: inline-block;
+	border: 2px solid white;
+	cursor: pointer;
+	background-color: white;
+	text-align: center;
+}
+
+input[name="itemCategory"]+label {
+	display: inline-block;
+	border: 2px solid white;
+	cursor: pointer;
+	background-color: white;
+	text-align: center;
+}
+
+input:checked+label {
+	border: 2px solid #bcbcbc;
+}
+#categoryDiv{
+background-color: #f5f5f5;
+font-size:0.9em;
+height: 50px;
+padding: 13px 60px;
+}
+.categoryLink{
+color: black;
+text-decoration: none;
+}
+
+.ten{
+color: gray;
+}
+</style>
+</head>
+<body>
+<div id="searchItem" class="searchItem">
+				<a @click="searchclick" name="button"> <img id="search" src="../img/search.png" alt="search"></a>
+ 				<div :class="[dropdown,toggle]">
+ 				<ul>
+ 				<form action="/item/searchItem?" method="get">
+					<select name="categorySearchBar">
+						<option value="Outer" selected>Outer</option>
+						<option value="Skirt">Skirt</option>
+						<option value="Pants">Pants</option>
+						<option value="Blouse">Blouse</option>
+						<option value="Shirts">Shirts</option>
+						<option value="Accessory">Accessory</option>
+						<option value="Shoes">Shoes</option>
+						<option value="Bag">Bag</option>
+					</select>
+					<input class="searchform" type="text" name="keyword" id="keyword">
+					<button type="submit">검색</button>
+				</form>
+  				</ul>
+  				</div>
+	</div>
+	<div class="header">
+		<img id="logo" src="../img/백구시보.png" alt="logo"> <input
+			type="checkbox" id="chk">
+		<div class="menu">
+			<a id="products">PRODUCTS</a> <a id="aboutus">ABOUT US</a> <a
+				class="icon" href="/orderItem/viewCartMemNum">
+		<a th:if="${session.user}">
+				<a class="icon" th:href="@{/member/mainMember}"><img id="user" src="../img/user.png" alt="user"></a>
+			</a>
+			<a th:if="${session.user}!=null or ${session.admin}!=null">
+				<a id="log" th:href="@{/member/logoutMember}">LogOut</a>
+			</a>
+			<a th:if="${session.user}==null and ${session.admin}==null">
+				<a th:href="@{/member/loginMember}">LogIn</a>
+				<a th:href="@{/member/joinMember}">Join Us</a>
+			</a>
+			<a th:unless="${session.admin}">
+				<a class="icon" href="/orderItem/viewCartMemNum"><img id="cart" src="../img/cart.png" alt="cart"></a>
+            </a>
+
+		</div>
+	</div>
+		<div id="categoryDiv">
+			<a href="/" class="categoryLink">메인 화면</a><span class="ten"> ● </span>
+			<a href="/item/search" class="categoryLink" style="color: gray;">상품 페이지</a>
+		</div>
+
+	<div>
+		<div style="padding: 10px;" class='left-box'><br>
+			<form action="search" name="searchForm-search" onsubmit="return check()">
+				<div class="title">카테고리</div>
+				<br>
+				<div class="content">
+					<ul class="content-category" style="text-align: center;">
+						<li class="liCategory"><input type="radio"
+							name="itemCategory" id="Outer" value="Outer"><label for="Outer">Outer</label></li>
+						<li class="liCategory"><input type="radio"
+							name="itemCategory" id="Skirt" value="Skirt"><label for="Skirt">Skirt</label></li>
+						<li class="liCategory"><input type="radio"
+							name="itemCategory" id="Pants" value="Pants"><label for="Pants">Pants</label></li>
+						<li class="liCategory"><input type="radio"
+							name="itemCategory" id="Blouse" value="Blouse"><label for="Blouse">Blouse</label></li>
+						<li class="liCategory"><input type="radio"
+							name="itemCategory" id="Shirts" value="Shirts"><label for="Shirts">Shirts</label></li>
+					<li class="liCategory"><input type="radio"
+							name="itemCategory" id="Accessory" value="Accessory"><label for="Accessory">Accessory</label></li>
+							<li class="liCategory"><input type="radio"
+							name="itemCategory" id="Shoes" value="Shoes"><label for="Shoes">Shoes</label></li>
+							<li class="liCategory"><input type="radio"
+							name="itemCategory" id="Bag" value="Bag"><label for="Bag">Bag</label></li>
+					</ul>
+				</div>
+				<br> <br><br><br><br>
+				<div class="title">색</div>
+				<br>
+				<div class="content">
+					<ul class="content-color">
+						<li class="li"><input type="radio" name="itemColor"
+							id="black" value="BLACK"><label for="black"
+							class="itemColor" title="BLACK"></label></li>
+						<li class="li"><input type="radio" name="itemColor"
+							id="white" value="WHITE"><label for="white"
+							class="itemColor" title="WHITE"></label></li>
+						<li class="li"><input type="radio" name="itemColor" id="red"
+							value="RED"><label for="red" class="itemColor"
+							title="RED"></label></li>
+						<li class="li"><input type="radio" name="itemColor"
+							id="orange" value="ORANGE"><label for="orange"
+							class="itemColor" title="ORANGE"></label></li>
+						<li class="li"><input type="radio" name="itemColor"
+							id="yellow" value="YELLOW"><label for="yellow"
+							class="itemColor" title="YELLOW"></label></li>
+							<br><br>
+						<li class="li"><input type="radio" name="itemColor"
+							id="green" value="GREEN"><label for="green"
+							class="itemColor" title="GREEN"></label></li>
+						<li class="li"><input type="radio" name="itemColor" id="blue"
+							value="BLUE"><label for="blue" class="itemColor"
+							title="BLUE"></label></li>
+						<li class="li"><input type="radio" name="itemColor" id="navy"
+							value="NAVY"><label for="navy" class="itemColor"
+							title="NAVY"></label></li>
+						<li class="li"><input type="radio" name="itemColor"
+							id="purple" value="PURPLE"><label for="purple"
+							class="itemColor" title="PURPLE"></label></li>
+						<li class="li"><input type="radio" name="itemColor" id="gray"
+							value="GRAY"><label for="gray" class="itemColor"
+							title="GRAY"></label></li>
+					</ul>
+				</div>
+				<br> <br> <br><br>
+				<div class="title">가격대</div>
+				<br>
+				<div class="content" style="text-align: center;">
+					<select name="itemPrice1" id=itemPrice1>
+						<option value="0">0</option>
+						<option value="200000">200000</option>
+						<option value="400000">400000</option>
+						<option value="600000">600000</option>
+						<option value="800000">800000</option>
+					</select> 이상 <select name="itemPrice2" id="itemPrice2">
+						<option value="0">0</option>
+						<option value="200000">200000</option>
+						<option value="400000">400000</option>
+						<option value="600000">600000</option>
+						<option value="800000">800000</option>
+					</select> 이하 <br> <span style="font-size: 0.8em; color: gray">※
+						0은 빈칸으로 사용가능합니다.</span>
+				</div>
+				<br> <br>
+				<div class="title">사이즈</div>
+				<div class="content">
+					<ul class="content-size" style="text-align: center;">
+						<li class="li"><input type="radio" name="itemSize" id="XS"
+							value="XS"><label for="XS">XS</label></li>
+						<li class="li"><input type="radio" name="itemSize" id="S"
+							value="S"><label for="S">S</label></li>
+						<li class="li"><input type="radio" name="itemSize" id="M"
+							value="M"><label for="M">M</label></li>
+						<li class="li"><input type="radio" name="itemSize" id="L"
+							value="L"><label for="L">L</label></li>
+						<li class="li"><input type="radio" name="itemSize" id="XL"
+							value="XL"><label for="XL">XL</label></li>
+					</ul>
+				</div>
+				<br> <br> <br>
+				<div style="text-align: center;">
+					<button id="searchBtn">검색</button>
+				</div>
+			</form>
+		</div>
+		<script>
+		function check(){
+			var itemPrice1 = document.getElementById("itemPrice1").value;
+			var itemPrice2 = document.getElementById("itemPrice2").value;
+			if(itemPrice2=="0"){
+				if(itemPrice1=="0"){
+					return true;
+				}else{
+					return true;
+				}
+			}else{
+				if(itemPrice1==itemPrice2){
+					alert("전후가 다른 가격대를 입력해주세요.")
+					return false;
+				} else{
+					if(itemPrice2<itemPrice1){
+						alert("정확한 가격대를 입력해주세요.")
+						return false;
+					}else{
+						return true;
+					}
+				}
+			}
+		}
+		</script>
+
+		<!-- 메인 -->
+
+		<div class='right-box'>
+			<div align="right">
+			<a href="itemAddForm"><button class="buttonAdmin" th:if="${session.admin}">상품등록</button></a>
+			</div>
+			<p style="font-size: 2.5em;" align="center">상품목록</p>
+			<br>
+			<th:block th:each="Item : ${Item}">
+				<div style="float: left; width: 33%; margin-bottom: 100px;">
+					<div align="center">
+						<a th:href="@{contentView?itemNum=}+${Item.itemNum}"> <img
+							th:src="@{/img/}+${Item.itemImage}+@{.png}"
+							th:alt="${Item.itemImage}" width="200px" height="200px">
+						</a>
+					</div>
+					<a th:href="@{contentView?itemNum=}+${Item.itemNum}">
+					<div th:text="|${Item.itemName}(${Item.itemSize})|" align="center" style="font-size: 2em;"></div></a>
+					<div
+						th:text="|${#numbers.formatInteger(Item.itemPrice,3,'COMMA')}&nbsp원|"
+						align="center" style="font-size: 2em;"></div>
+				</div>
+			</th:block>
+		</div>
+	</div>
+
+	<div class="footer" align="center" style="float: left; width: 100%;">
+		<div class="footer1">ABOUT US</div>
+		<div class="footer2">It's the trend that is not in the world</div>
+		<div class="footer3">
+			<p>서울시 서초구 강남대로 459 402호 백구시보</p>
+			<p>010-1234-1234</p>
+			<p>195@google.com</p>
+		</div>
+	</div>
+	<script>
+    let app = new Vue({
+    	  el : '#searchItem',
+    	  data(){
+   	     return{
+          dropdown:'dropdown',
+          toggle:{
+            on : false
+          }
+        };
+      },
+      methods :{
+    	  searchclick(){
+            this.toggle.on =! this.toggle.on;
+        }
+      }
+    });
+        document.getElementById("logo").addEventListener('click', function () {
+            location.href = "/";
+        });
+        document.getElementById("aboutus").addEventListener('click', function () {
+            location.href = "/aboutus";
+        });
+        document.getElementById("products").addEventListener('click', function () {
+          	location.href="/item/search" 
+          });
+    </script>
+</body>
+</html>

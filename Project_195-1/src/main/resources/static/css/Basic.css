@@ -1,0 +1,387 @@
+
+.header {
+    height: 110px;
+    width: 100%;
+    background-color: white;
+  
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    width: 60px;
+    height: 100px;
+    flex-grow: 1;
+}
+
+.nav>li ol{
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    z-index: 2;
+    max-height: 0px;
+    transition: max-height 5s;
+    overflow: hidden;
+}
+
+/*main header css �걹*/
+
+/**main slider css start*/
+.main_slide {
+    width: 100%;
+    height: 800px;
+    background-color: #fafafa;
+    display: flex;
+    justify-content: space-around;
+}
+.slide_inner {
+    background-color: white;
+    width: 60%;
+    height: 500px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.main_slide_inner_text {
+    font-size: 50px;
+    margin: 0 auto;
+}
+.main_slide_Btn {
+    width: 200px;
+    height: 50px;
+    margin: 0 auto;
+    border-radius: 20px;
+}
+/*main slider css �걹*/
+
+/*main contents1 css start*/
+
+
+.Re_box {
+            overflow:hidden;
+            font-size:0;
+            height:160px;} 
+            
+.Re_img {
+            width:100%;
+            transition:transform 1s;
+            }
+
+ .Re_box:hover img {
+            transform:scale(1.2);
+        }
+
+
+.main_contents1 {
+    background-color: white;
+    width: 90%;
+    height: 250px;
+    margin-top: 100px;
+    margin-left: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.Re_box {
+    width: 30%;
+    height: 90%;
+    background-color: #fafafa;
+    align-self: center;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.Re_img {
+	width: 100%;
+	object-fit: cover;
+
+}
+
+.Re_box_text_box {
+    width: 150px;
+    height: 70px;
+    border-radius: 5px;
+    align-self: center;
+    position: absolute;
+}
+
+.RE_a {
+
+ text-align: center;
+ color: white;
+ font-family: 'Bebas Neue', cursive;
+    font-size: 60px;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+/*main contents1 css end*/
+
+
+/*main center text css */
+.main_center_text {
+    background-color:  white;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.main_center_p {
+    margin: 0 auto;
+    font-size: 40px;
+    text-align: center;
+     font-family: 'Bebas Neue', cursive;
+}
+/*main center text css end */
+
+.a { 
+	width: 60%; 
+	border-top: 3px #c2c4c6 solid; 
+	margin-left: 20%;
+	margin-top: -90px;
+}
+
+.main_contents2 {
+    display: flex;
+    flex-wrap: wrap;
+    flex-shrink: 3;
+    overflow: hidden;
+     width: 70%;
+    margin-left: 15%;
+    height: auto;
+}
+
+.card_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    position: relative;
+}
+
+.list_box {
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 40px;
+     position: relative; 
+	overflow: hidden;
+	box-shadow: 5px 5px 15px #d7d7d7;
+}
+
+.box { 
+ 	position: relative; 
+	width: 300px; 
+	overflow: hidden; 
+	}
+
+
+.card_contents{
+    align-self: center;
+    width: 100%;
+    height: 80%;
+    margin: 10px auto;
+    border-radius: 3px;
+    background-color: white;
+}
+
+.over { 
+	position: absolute; 
+	bottom: 0;; 
+	left: 0; 
+	background: white; 
+	transition: all 0.6s; 
+	overflow: hidden;  
+	width: 100%; 
+	height: 15%; 
+	}
+    
+.caption { 
+	color: white; 
+	font-weight: bold; 
+	position: absolute; 
+	top: 50%; 
+	left: 50%; 
+	transform: translate(-50%, -50%);
+        }
+        
+.box:hover .over{ 
+	height: 50%; }
+
+
+.under_nav {
+background-color: #c2c4c6 ;	
+width: 100%;
+height: 250px;	
+margin-top: 50px;
+margin-bottom: 20px;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+
+}
+
+.uder_nav_box{
+	background-color:#5f7891;
+	display: flex;
+	flex-direction: column;
+	justify-content:space-around;
+	width: 24.9%;
+}
+
+.icon { 
+    margin-top: 10px;
+	align-self: center;
+	width: 80px;
+	height: 80px;
+}
+
+.nav_text {
+  margin-top: -60px;
+	align-self: center;
+	font-family: 'Jua', sans-serif;
+	font-size: 20px;
+	text-align: center;
+}
+
+
+.main_under {
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+}
+
+.under_img_box {
+    width: 50%;
+    height:100%;
+
+}
+
+.under_text_slide {
+    width:50%;
+    height: 100%;
+    background-color: white;
+}
+
+.under_text {
+	text-align: center;
+	margin: 190px auto;
+	 font-family: 'Bebas Neue', cursive;
+	 font-size: 40px;
+}
+
+
+
+.under_text {
+	-webkit-animation:blink 1.5s ease-in-out infinite alternate;
+    -moz-animation:blink 1.5s ease-in-out infinite alternate;
+    animation:blink 1.5s ease-in-out infinite alternate;
+}
+@-webkit-keyframes blink{
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+@-moz-keyframes blink{
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+@keyframes blink{
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+
+.footer {
+    height: 160px;
+    background-color:  #c7c7c7;
+}
+
+
+
+
+.logmian {
+	width: 60%;
+	height: 500px;
+	margin:0 auto;
+	align-self: center;
+	text-align: center;
+}
+
+.log_label {
+
+	font-size: 30px;
+	color: gray;
+	 font-family: 'Bebas Neue', cursive;
+}
+.loginput {
+	width: 60%;
+	height: 40px;
+	align-self: center;
+	text-align: center;
+}
+
+.loginbtn {
+	width: 60%;
+	height: 40px;
+	background-color: black;
+	
+}
+
+.log_btn_text {
+font-size: 20px;
+	color: white;
+	 font-family: 'Bebas Neue', cursive;
+}
+
+.line { 	width: 60%; 
+	border-top: 2px #c2c4c6 solid; 
+	margin-left: 20%;
+
+}
+
+
+.joinmian {
+	width: 60%;
+	height: 900px;
+	margin:0 auto;
+	align-self: center;
+	text-align: center;	
+}
+
+.join_label {
+	font-size: 25px;
+	color: gray;
+	 font-family: 'Bebas Neue', cursive;
+
+}
+
+
+.info_main {
+		width: 60%;
+	height: 800px;
+	margin:0 auto;
+	align-self: center;
+	text-align: center;	
+}
+
+.mytext {
+	font-size: 30px;
+	color: black;
+	 font-family: 'Bebas Neue', cursive;
+}
+
+.info_text {
+	font-size: 20px;
+	color: gray;
+
+}
+
+
+.joinline {
+	
+	width: 60%;
+	height: 10px;
+	margin-left: 20%;
+	
+}

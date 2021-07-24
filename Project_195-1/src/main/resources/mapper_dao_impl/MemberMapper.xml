@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTDMapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mp.p195.model.dao.MemberMapper">
+
+	<select id="listMember" resultType="Member">
+		select * from member
+	</select>
+
+	<insert id="memberCreate" parameterType="Member">
+		insert into member (memnum, Id, Password, Name, Email, Birth, Gender, Address, PhNUM, Card)
+		values(members.nextval, #{id}, #{password}, #{name}, #{email}, #{birth}, #{gender},
+		#{address}, #{phNum},#{card})
+	</insert>
+
+	<select id="idChk" resultType="Member">
+		SELECT id FROM member where id=#{id}
+	</select>
+	
+		<select id="pwChk" resultType="Member">
+		SELECT password FROM member where password=#{password}
+	</select>
+
+	<select id="memberInfo"  resultType="Member">
+		select memnum, Id, Password, Name, Email, Address, phNum, card from member where Id= #{Id} and Password= #{Password}
+	</select>
+	
+	<select id="adminInfo" resultType="Admin">
+		select adminId, adminPassword from admin where adminId= #{Id} and adminPassword= #{Password}
+	</select>
+	
+	<update id="memberUpdate" parameterType="Member">
+		update member set Password=#{password}, Email=#{email} , Address=#{address}
+		where id=#{id}
+	</update>
+
+	<delete id="memberDelete" parameterType="String">
+		delete from member where Id=#{id} AND Password = #{password}
+	</delete>
+</mapper>

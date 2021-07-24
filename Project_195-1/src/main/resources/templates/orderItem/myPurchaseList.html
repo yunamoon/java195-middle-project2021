@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>My Purchase List</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+</head>
+<body>
+<div id="searchItem" class="searchItem">
+				<a @click="searchclick" name="button"> <img id="search" src="../img/search.png" alt="search"></a>
+ 				<div :class="[dropdown,toggle]">
+ 				<ul>
+ 				<form action="/item/searchItem?" method="get">
+					<select name="categorySearchBar">
+						<option value="Outer" selected>Outer</option>
+						<option value="Skirt">Skirt</option>
+						<option value="Pants">Pants</option>
+						<option value="Blouse">Blouse</option>
+						<option value="Shirts">Shirts</option>
+						<option value="Accessory">Accessory</option>
+						<option value="Shoes">Shoes</option>
+						<option value="Bag">Bag</option>
+					</select>
+					<input class="searchform" type="text" name="keyword" id="keyword">
+					<button type="submit">검색</button>
+				</form>
+  				</ul>
+  				</div>
+	</div>
+	<div class="header">
+		<img id="logo" src="../img/백구시보.png" alt="logo"> <input
+			type="checkbox" id="chk">
+		<div class="menu">
+			<a id="products">PRODUCTS</a> <a id="aboutus">ABOUT US</a> <a
+				class="icon" href="/orderItem/viewCartMemNum">
+		<a th:if="${session.user}">
+				<a class="icon" th:href="@{/member/mainMember}"><img id="user" src="../img/user.png" alt="user"></a>
+			</a>
+			<a th:if="${session.user}!=null or ${session.admin}!=null">
+				<a id="log" th:href="@{/member/logoutMember}">LogOut</a>
+			</a>
+			<a th:if="${session.user}==null and ${session.admin}==null">
+				<a th:href="@{/member/loginMember}">LogIn</a>
+				<a th:href="@{/member/joinMember}">Join Us</a>
+			</a>
+			<a th:unless="${session.admin}">
+				<a class="icon" href="/orderItem/viewCartMemNum"><img id="cart" src="../img/cart.png" alt="cart"></a>
+            </a>
+
+		</div>
+	</div>
+<h1 style="text-align: center; height: auto; margin-top:40px; margin-bottom:20px;">구매 목록</h1>
+
+	<table style="width: 80%" class="type11" >
+		<thead>
+			<tr>
+				<th><input type="checkbox" name="allCheck" id="allCheck"/></th>
+				<th>상품이미지</th>
+				<th>상품명</th>
+				<th>상품컬러</th>
+				<th>상품사이즈</th>
+				<th>상품가격</th>
+				<th>상품수량</th>
+				<th>총 구매 가격</th>
+			</tr>
+		</thead>
+		<tbody th:each="viewPurchase : ${viewPurchase}">
+			<tr>
+				<td ><input type="checkbox" name="rowCheck" th:value="${viewPurchase.orderNum}" /></td>
+				<td><img th:src="@{/img/}+${viewPurchase.itemImage}+@{.png}" th:alt="이미지"
+				width="80px" height="80px" vspace="50px;" hspace="50px;"></td>
+				<td><span th:text="${viewPurchase.itemName }"></span></td>
+				<td><span th:text="${viewPurchase.itemColor }"></span></td>
+				<td><span th:text="${viewPurchase.itemSize }"></span></td>
+				<td><span th:text="${viewPurchase.itemPrice }"></span></td>
+				<td><span th:text="${viewPurchase.orderCount}"></span></td>
+				<td><span th:text="${viewPurchase.itemPrice*viewPurchase.orderCount}"></span></td>
+			</tr>
+
+		</tbody>
+	</table>
+	<div style="text-align: center; margin-top:30px">
+	<button class="button" onclick="deleteValue()">선택 항목 삭제</button>
+	<button class="button" id="main">메인으로</button>
+	</div>
+	<div class="footer">
+        <div class="footer1">ABOUT US</div>
+  	   <div class="footer2">It's the trend that is not in the world</div>
+        <div class="footer3">
+            <p>서울시 서초구 강남대로 459 402호 백구시보</p>
+            <p>010-1234-1234</p>
+            <p>195@google.com</p>
+        </div>
+    </div>
+<script>
+$(function(){
+	var chkObj = document.getElementsByName("rowCheck");
+	var rowCnt = chkObj.length;
+	
+	$("input[name='allCheck']").click(function(){
+		var chk_listArr = $("input[name= 'rowCheck']");
+		for (var i=0; i<chk_listArr.length; i++){
+			chk_listArr[i].checked = this.checked;
+	    }
+	});
+	$("input[name='rowCheck']").click(function(){
+		if($("input[name='rowCheck']:checked").length == rowCnt){
+			$("input[name='allCheck']")[0].checked = true;
+		}
+		else{
+			$("input[name= 'allCheck']")[0].checked = false;
+		}    			
+	});
+});
+
+function deleteValue(){
+	var url = "save";
+	var valueArr = new Array();
+	var list = $("input[name='rowCheck']");
+	for(var i = 0; i < list.length; i++){
+		if(list[i].checked){
+			valueArr.push(list[i].value);
+		}
+	}
+	if (valueArr.length == 0){
+		alert("선택된 항목이 없습니다.");
+	}
+	else{
+		if(confirm("정말 삭제하시겠습니까?")==true){
+			$.ajax({
+				url : url,
+				type : 'POST',
+				traditional : true,
+				data : {
+					valueArr : valueArr
+				},
+				success: function(jdata){
+					if(jdata = 1) {
+						alert("삭제 성공");
+					}
+					else{
+						alert("삭제 실패");
+					}
+				}
+			});	
+		}else{
+			return false;
+		}
+	}
+	setTimeout(function(){
+		location.href="/orderItem/myPurchaseList"; 
+	}, 500);
+}	
+
+document.getElementById("main").addEventListener('click', function() {
+	location.href = "/index";
+});
+let app = new Vue({
+	  el : '#searchItem',
+	  data(){
+	     return{
+      dropdown:'dropdown',
+      toggle:{
+        on : false
+      }
+    };
+  },
+  methods :{
+	  searchclick(){
+        this.toggle.on =! this.toggle.on;
+    }
+  }
+});
+document.getElementById("logo").addEventListener('click', function () {
+    location.href = "/";
+});
+document.getElementById("aboutus").addEventListener('click', function () {
+	location.href = "/aboutus";
+});
+document.getElementById("products").addEventListener('click', function () {
+	location.href="/item/search" 
+});
+</script>
+</body>
+</html>

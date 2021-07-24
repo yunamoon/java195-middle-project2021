@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Join</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/Basic.css}">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+</head>
+
+<body >
+<div id="searchItem" class="searchItem">
+				<a @click="searchclick" name="button"> <img id="search" src="../img/search.png" alt="search"></a>
+ 				<div :class="[dropdown,toggle]">
+ 				<ul>
+ 				<form action="/item/searchItem?" method="get">
+					<select name="categorySearchBar">
+						<option value="Outer" selected>Outer</option>
+						<option value="Skirt">Skirt</option>
+						<option value="Pants">Pants</option>
+						<option value="Blouse">Blouse</option>
+						<option value="Shirts">Shirts</option>
+						<option value="Accessory">Accessory</option>
+						<option value="Shoes">Shoes</option>
+						<option value="Bag">Bag</option>
+					</select>
+					<input class="searchform" type="text" name="keyword" id="keyword">
+					<button type="submit">검색</button>
+				</form>
+  				</ul>
+  				</div>
+	</div>
+	<div class="header">
+		<img id="logo" src="../img/백구시보.png" alt="logo"> <input
+			type="checkbox" id="chk">
+		<div class="menu">
+			<a id="products">PRODUCTS</a> <a id="aboutus">ABOUT US</a> <a
+				class="icon" href="/orderItem/viewCartMemNum">
+		<a th:if="${session.user}">
+				<a class="icon" th:href="@{/member/mainMember}"><img id="user" src="../img/user.png" alt="user"></a>
+			</a>
+			<a th:if="${session.user}!=null or ${session.admin}!=null">
+				<a id="log" th:href="@{/member/logoutMember}">LogOut</a>
+			</a>
+			<a th:if="${session.user}==null and ${session.admin}==null">
+				<a th:href="@{/member/loginMember}">LogIn</a>
+				<a th:href="@{/member/joinMember}">Join Us</a>
+			</a>
+			<a th:unless="${session.admin}">
+				<a class="icon" href="/orderItem/viewCartMemNum"><img id="cart" src="../img/cart.png" alt="cart"></a>
+            </a>
+
+		</div>
+	</div>
+
+</div>
+
+
+
+
+
+<!-- main text 왜 필요한지 모를, layout 분할 ?-->
+<div class = "main_center_text">
+    <p class="main_center_p"> 
+CREATE AN ACCOUNT</p>
+   <div  class="a" ></div>
+</div>
+<!-- main text end-->
+
+	<main class="joinmian">
+		<form class="memberjoin" action="/member/createMember" method="post">
+			<label  class="join_label" for="name"> Name </label><br> 
+			<input  class="loginput"   type="text" id="name" name="name" placeholder="이름을 입력하세요." /><br> 
+			
+			<label class="join_label" for="id" > ID    </label><br> 
+			<input  class="loginput"  type="text" id="id" name="id" placeholder="아이디를 입력하세요." onkeyup="idOverlap()" /> <br> 
+			<span id="idcheck"></span><br>
+			
+			 <label  class="join_label"  for="password"> PW  </label><br>
+			<input   class="loginput"  type="password" id="password" name="password" placeholder="암호를 입력하세요." /><br> 
+			
+			<label  class="join_label" for="email"> Email   </label><br> 
+			<input  class="loginput"   type="text" id="email" name="email" placeholder="이메일을 입력하세요." /><br> 
+			
+			<label class="join_label"  for="birth"> Birth_date  </label><br> 
+			<input  class="loginput"   type="text" id="birth" name="birth" placeholder="생년월일을 입력하세요." /><br> 
+			
+			<label  class="join_label"  for="gender" > Gender </label><br> 
+			<input  class="loginput"   type="text" id="gender" name="gender" placeholder="성별을 입력하세요." /><br> 
+			
+			<label  class="join_label"  for="address "> Address   </label><br>
+			<input  class="loginput"   type="text" id="address " name="address" placeholder="주소 입력하세요." /><br> 
+			
+			<label class="join_label" l for="phNum"  >Phone_Number </label><br> 
+			<input   class="loginput"  type="text" id="phNum" name="phNum" placeholder="전화 번호를 입력하세요." /><br> 
+			
+			<label class="join_label" for="card"> Card  </label><br> 
+			<input  class="loginput"   type="text" id="card" name="card" placeholder="결제 정보를 입력하세요." /><br> 
+			 <br>
+			  <br>
+			  <div  class="line" ></div> 
+<br>
+ <br>
+			<button  class="loginbtn"   type="submit">  <p class="log_btn_text"> CREATE </p></button>
+		</form>
+		<br>
+		 <div  class="joinline" ></div> 
+	<button class="loginbtn"  > <p class="log_btn_text"> Return </p></button>
+</main>
+
+
+
+<!-- main contents 1 _ img box end-->
+<div class = "main_center_text">
+   <div  class="a" ></div>
+</div>
+
+<!-- footer start -->
+<div class ="footer">
+    <!-- footer text -->
+    <div class="about_us"><p>ABOUT US</p> </div>
+     <div class="footer2">It's the trend that is not in the world</div>
+       <div class="footer3">
+            <p>서울시 서초구 강남대로 459 402호 백구시보</p>
+            <p>010-1234-1234</p>
+            <p>195@google.com</p>
+        </div>
+    <!-- footer logo start -->
+    <div class="about_us_logo">
+
+    </div>
+    <!-- footer logo end -->
+</div>
+    
+    
+    <script>
+	function idOverlap() {
+		var inputId = document.getElementById("id").value;
+		var CheckId = document.getElementById("idcheck");
+
+		$.ajax({
+			type : "post",
+			url : "membertest",
+			data : {
+				"id" : inputId
+			},
+			success : function(result) {
+
+				if (result == "") {
+					CheckId.style.color = "green";
+					CheckId.innerHTML = "해당 아이디는 사용이 가능합니다.";
+				} else {
+					CheckId.style.color = "red";
+					CheckId.innerHTML = "해당 아이디는 사용이 불가능합니다.";
+				}
+			},
+			error : function() {
+				console.log("통신 실패??");
+				alert("통신실패");
+			}
+		});
+	}
+	
+  	  let app = new Vue({
+      	  el : '#searchItem',
+      	  data(){
+     	     return{
+            dropdown:'dropdown',
+            toggle:{
+              on : false
+            }
+          };
+        },
+        methods :{
+      	  searchclick(){
+              this.toggle.on =! this.toggle.on;
+          }
+        }
+      });
+  	  
+      document.getElementById("logo").addEventListener('click', function () {
+            location.href = "/";
+      });
+      document.getElementById("aboutus").addEventListener('click', function () {
+      	location.href = "aboutus";
+      });
+      document.getElementById("products").addEventListener('click', function () {
+      	location.href="/item/search" 
+      });
+    
+    
+    
+    </script>
+</body>
+
+</html>

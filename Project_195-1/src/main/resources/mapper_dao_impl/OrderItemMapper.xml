@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTDMapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mp.p195.model.dao.OrderItemMapper">
+		<select id="viewCartMemNum2" resultType="ViewCart">
+	select i.itemName, i.itemSize, i.itemPrice, i.itemImage, i.itemColor, o.orderCount, o.orderNum
+	from Item i, OrderItem o, Member m
+	where m.memNum = o.memNum and i.itemNum = o.itemNum and o.memNum = #{memNum} and o.cartStatus='in'
+	order by o.orderNum
+	</select>
+	
+	<select id="myPurchaseList" resultType="ViewCart">
+		select i.itemName, i.itemSize, i.itemPrice, i.itemImage, i.itemColor, o.orderCount, o.orderNum
+		from Item i, OrderItem o, Member m
+		where m.memNum = o.memNum and i.itemNum = o.itemNum and o.memNum = #{memNum} and o.cartStatus='out'
+		order by o.orderNum
+	</select>
+	
+	<delete id="delete" parameterType="String">
+	delete from orderItem where orderNum = #{orderNum}
+	</delete>
+	
+	<update id="update" parameterType="hashmap">
+	update orderitem set ordercount = #{orderCount} where ordernum = #{orderNum}
+	</update>
+	
+	<update id="purchase">
+		update orderitem set cartstatus = 'out' where memnum = #{memNum} and cartstatus = 'in'
+	</update>
+	
+	<update id="save">
+		update orderitem set cartstatus = 'save' where memnum= #{memNum} and cartstatus = 'out' and orderNum = #{orderNum}
+	</update>
+	
+</mapper>

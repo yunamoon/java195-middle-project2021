@@ -1,0 +1,543 @@
+style.css
+
+/*
+�⺻ header�� footer�� ���� css�Դϴ�.
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+table.type11 {
+  border-collapse: separate;
+  border-spacing: 1px;
+  text-align: center;
+  line-height: 1.5;
+  margin: auto;
+}
+table.type11 th {
+  width: 200px;
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  color: white;
+  background: #ce4869 ;
+}
+table.type11 td {
+  width: 200px;
+  padding: 10px;
+  vertical-align: top;
+  border-bottom: 1px solid #ccc;
+  background: #eee;
+}
+
+table.type12 {
+  border-collapse: separate;
+  border-spacing: 1px;
+  text-align: center;
+  line-height: 1.5;
+  margin: 20px 10px;
+}
+table.type12 th {
+  width: 200px;
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #fff;
+  background: #8000ff ;
+}
+table.type12 td {
+  width: 200px;
+  padding: 10px;
+  vertical-align: top;
+  border-bottom: 1px solid #ccc;
+  background: #eee;
+}
+
+.button {
+
+  background-color: navy;
+
+  border: none;
+
+  color: white;
+
+  padding: 15px 30px;
+
+  text-align: center;
+
+  text-decoration: none;
+
+  display: inline-block;
+
+  font-size: 16px;
+
+  margin: 4px 2px;
+
+  cursor: pointer;
+  
+  border-radius: 5px;
+  
+  border-radius: 10%;
+}
+
+.smallButton {
+
+  background-color: #9792DE;
+
+  border: none;
+
+  color: white;
+
+  padding: 7px 14px;
+
+  text-align: center;
+
+  text-decoration: none;
+
+  display: inline-block;
+
+  font-size: 16px;
+
+  margin: 4px 2px;
+
+  cursor: pointer;
+}
+
+
+.searchItem {
+display: flex;
+flex-direction: row-reverse;
+margin-right: 100px;
+margin-top: 10px;
+}
+
+.searchform{
+width : 500px;
+height: 20px;
+align-self: center;	
+}
+
+@media screen {
+
+.dropdown ul{
+    display: none;
+    list-style: none;
+  }
+  .dropdown.on ul{
+    display: block;
+    width: 700px;
+    height: 80px;
+  }
+	
+}
+
+#cart, #search, #user{
+    height :27px;
+    width: 27px;
+    cursor: pointer;
+}
+
+.hearder{
+    height: 150px;
+    background: #34495e;
+    padding: 0 20px;
+    margin: 1;
+}
+
+#logo {
+    margin-left: 50px;
+    height: 80px;
+    width: 200px;
+    float: left;
+    cursor: pointer;
+}
+.menu {
+    margin-top: 0px;
+    line-height: 90px;
+    border-bottom: 3px solid black;
+}
+
+#products{
+    margin-left: 80px; 
+    margin-right: 40px;
+    height: 40px;
+    font-size: 40px;
+    margin:20 20;
+    font-weight: bold;
+}
+#aboutus {
+    margin-left: 40px;
+    margin-right: 60px;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+#nav-mypage {
+    height: 10px;
+}
+.menu a{
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0 5px;
+    transition: 0.4s;
+    font-weight: 500;
+    font-size:26px;
+    color: black;
+    text-decoration: none;
+}
+
+.show-menu-btn, .hide-menu-btn {
+    transition: 0.4s;
+    font-size: 30px;
+    cursor: pointer;
+    display:none;
+}
+
+.show-menu-btn {
+    float: right;
+}
+
+.show-menu-btn i{
+    line-height: 100px;
+}
+
+.menu a:hover{
+    color: #3498db;
+}
+
+#chk{
+    position: absolute;
+    visibility: hidden;
+    z-index: -1;
+}
+
+.content{
+    padding: 0 20px;
+}
+
+
+.page {
+    height: 20px;
+    margin: 20px 20px;
+    border-bottom: 2px solid black;
+}
+
+#aboutUs, #contact{
+    cursor: pointer;
+}
+
+.footer {
+    border-top: 3px solid black;
+    margin-top: 100px;
+    padding-top: 20px;
+    text-align:center;
+    float:left;
+    width:100%;
+}
+
+.last {
+    border-top: 3px solid black;
+    margin-top: 100px;
+    padding-top: 20px;
+    text-align:center;
+}
+
+.footer1 {
+	position:relative;
+    font-size: 30px;
+    font-weight: 40px;
+}
+.footer2 {
+	position:relative;
+    font-size: 23px;
+    font-weight: 60px;
+    margin-bottom: 5px;
+}
+.footer3 {
+	position:relative;
+    margin: 100 100;
+    padding: 100 100;
+    margin-bottom: 20px;
+}
+
+/*������� header�� footer�� ���� css*/
+
+.pagecontent p {
+    text-align: center;
+    font-size: 80px;
+    font-weight: bold;
+}
+#location {
+    position:relative;
+    margin-left: 200px;
+    padding:10px;
+    width: 1100px;
+    height: 500px;
+    border : 1.5px solid black;
+    margin-bottom: 20px;
+}
+.pagecontent .locationaddress #address {
+    position:relative;
+    height: 30px;
+    width: 30px;
+    
+}
+.locationaddress p{
+    font-size: 30px;
+    margin-bottom: 50px;
+}
+/*purchase, afterPurchse��  css����*/
+.memInfo {
+	float:left;
+	margin-top:2%;
+	margin-left:2%;
+	width: 26%;
+	height: auto;
+	/* border: 3px solid black; */
+}
+.itemInfo {
+	margin-top:2%;
+	margin-right:2%;
+	margin-bottom:2%;
+	float:right;
+	height: auto;
+	width: 68%;
+	border: 3px solid black;
+}
+.pagepp {
+	float:left;
+	margin-top:50px;
+	margin-left:5%;
+	border: 3px solid black;
+	width: 90%;
+}
+#ordermem, #orderitem {
+	font-size: 30px;
+	text-align: center;
+	font-weight: bold;
+}
+/*purchase, afterPurchse��  css ��*/
+
+/*index�� ����css*/
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+.act{
+    border: 2px solid #fff;
+    border-radius: 50px;
+    padding: 6px 15px;
+}
+
+.slider {
+    position: relative;
+    width: 100%;
+    background: #2c3e50;
+}
+.myslider{
+    height: 655px;
+    overflow: hidden;
+    display: none;
+}
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, 50%);
+    font-size: 56px;
+    padding: 15px;
+    cursor: pointer;
+    color: #fff;
+    transition: 0.1s;
+    user-select: none;
+}
+.prev:hover, .next:hover {
+    color: #3498db;
+}
+
+.next {
+    right: 0;
+}
+
+.dotsbox {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 20px;
+    cursor: pointer;
+}
+
+.dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.active, .dot:hover {
+    border-color: #3498db;
+}
+
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+    from {opacity: 0.8;}
+    to {opacity:1}
+}
+
+@keyframes fade {
+    from {opacity: 0.8}
+    to {opacity: 1}
+}
+
+.txt {
+    position: absolute;
+    color: #fff;
+    letter-spacing: 2px;
+    line-height: 35px;
+    top: 40%;
+    left: 35%;
+    -webkit-animation-name: posi;
+    -webkit-animation-duration: 2s;
+    animation-name: posi;
+    animation-duration: 2s;
+    z-index: 1;
+}
+
+.txt a {
+    font-size: 30px;
+    height: 20px;
+    margin:10px;
+    padding:0;
+}
+.txt h1 {
+    font-size:70px;
+    margin:6px;
+    padding:1px;
+     color: #3498db;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.txt p {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+@-webkit-keyframes posi {
+    from {left: 45%}
+    to {left: 35%}
+}
+
+@keyframes posi {
+    from {left: 45%}
+    to {left: 35%}
+}
+
+
+.fade img {
+    transform: scale(1.5, 1.5);
+    -webkit-animation-name: zoomin;
+    -webkit-animation-duration: 40s;
+    animation-name: zoomin;
+    animation-duration: 40s;
+}
+
+@-webkit-keyframes zoomin {
+    from {transform: scale(1,1);}
+    to {transform: scale (1.5, 1.5);}
+}
+@keyframes zoomin {
+    from {transform: scale(1,1);}
+    to {transform: scale (1.5, 1.5);}
+}
+
+@media screen and (max-width: 800px){
+    .myslider {
+        height: 500px;
+    }
+    .txt {
+        line-height: 25px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-animation-name: posi2;
+        -webkit-animation-duration: 2s;
+        animation-name: posi2;
+        animation-duration: 2s;
+    }
+    @-webkit-keyframes posi2 {
+        from {top: 34%;}
+        to {top: 50%}
+    }
+    @keyframes posi2{
+        from {top:35%;}
+        to{top: 50%;}
+    }
+    .txt h1{
+        font-size: 40px;
+    }
+    .txt p{
+        font-size: 13px;
+    }
+
+}
+
+@media screen and (max-width: 520px) {
+    .txt h1 {
+        font-size: 30px;
+    }
+    .sign {
+        margin-right: 20px;
+    }
+    .sign a {
+        font-size: 12px;
+    }
+}
+/*index�� ���� css ��*/
+/*afterPurchase�� ���� css ����*/
+	#afterPurchase {
+		margin: 50px 33% 50px 33%;
+		padding: 10px;
+		height: auto;
+		width: 33%;
+		border : 3px solid black;
+		border-radius: 10%;
+	}
+	#afterPurchaseTable{
+		border: 1px;
+		margin:0 0 0 70px;
+		padding-top: 0;
+		padding-left: 5%;
+	}
+	#afterPurchase h1 {
+		text-align: center;
+		margin: 15px;
+		padding:0;
+	}
+	#address {
+		margin: 20px;
+		padding: 0px;
+		text-align: center;
+	}
+	#bye {
+		margin: 20px;
+		padding: 0px;
+		text-align: center;		
+	}
+	#bye p{
+		font-size:27px;
+		font-weight: bold;	
+	}
+/*afterPurchase�� ���� css ��*/

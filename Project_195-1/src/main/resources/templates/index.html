@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/Basic.css}">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+.lastt{
+	text-decoration: none;
+}
+</style>
+</head>
+
+<body >
+
+<div id="searchItem" class="searchItem">
+				<a @click="searchclick" name="button"> <img id="search" src="../img/search.png" alt="search"></a>
+ 				<div :class="[dropdown,toggle]">
+ 				<ul>
+ 				<form action="/item/searchItem?" method="get">
+					<select name="categorySearchBar">
+						<option value="Outer" selected>Outer</option>
+						<option value="Skirt">Skirt</option>
+						<option value="Pants">Pants</option>
+						<option value="Blouse">Blouse</option>
+						<option value="Shirts">Shirts</option>
+						<option value="Accessory">Accessory</option>
+						<option value="Shoes">Shoes</option>
+						<option value="Bag">Bag</option>
+					</select>
+					<input class="searchform" type="text" name="keyword" id="keyword">
+					<button type="submit">검색</button>
+				</form>
+  				</ul>
+  				</div>
+	</div>
+	<div class="header">
+		<img id="logo" src="../img/백구시보.png" alt="logo"> <input
+			type="checkbox" id="chk">
+		<div class="menu" style="border-bottom:0px;">
+			<a id="products">PRODUCTS</a> <a id="aboutus">ABOUT US</a> <a
+				class="icon" href="/orderItem/viewCartMemNum">
+		<a th:if="${session.user}">
+				<a class="icon" th:href="@{/member/mainMember}"><img id="user" src="../img/user.png" alt="user"></a>
+			</a>
+			<a th:if="${session.user}!=null or ${session.admin}!=null">
+				<a id="log" th:href="@{/member/logoutMember}">LogOut</a>
+			</a>
+			<a th:if="${session.user}==null and ${session.admin}==null">
+				<a th:href="@{/member/loginMember}">LogIn</a>
+				<a th:href="@{/member/joinMember}">Join Us</a>
+			</a>
+			<a th:unless="${session.admin}">
+				<a class="icon" href="/orderItem/viewCartMemNum"><img id="cart" src="../img/cart.png" alt="cart"></a>
+            </a>
+
+		</div>
+	</div>
+  
+    <div class="slider">
+
+        <div class="myslider fade" style="display: block;">
+            <div class="txt">
+                <a style="color:#FFFFFF;">380 NEW ITEMS</a><br>
+                <h1 style="color:#7D6861">New In</h1>
+               
+            </div>
+            <img src="../img/y1.jpg" alt="fw2" style="width:100%; height: 100%;">
+        </div>
+        <div class="myslider fade">
+            <div class="txt">
+                <a>Unique & Simple Style 2021</a><br>
+                <h1>2021 Spring</h1>
+            </div>
+            <img src="../img/y2.jpg" alt="fw1" style="width:100%; height: 100%;">
+        </div>
+        <div class="myslider fade">
+            <div class="txt">
+                <a style="color:white;">A MOMENT FOR YOURSELF</a><br>
+                <h1 style="color:#8C6419">Right Now</h1>
+            </div>
+            <img src="../img/y3.jpg" alt="fw3" style="width:100%; height: 100%;">
+        </div>
+        <div class="myslider fade">
+            <div class="txt">
+                <h2 >GET SOME INSPIRATION</h2>
+                <h3 style="color:#78BDBF">What Are You Looking For?</h3>
+            </div>
+            <img src="../img/y4.jpg" alt="fw1" style="width:100%; height: 100%;">
+        </div>
+        <div class="myslider fade">
+            <div class="txt">
+                <h1 style="color:#E3C891; font-size: 50px;">YOU MAKE US LOOK GOOD</h1>
+                <P>With Us!</P>
+            </div>
+            <img src="../img/y5.jpg" alt="fw1" style="width:100%; height: 100%;">
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        <div class="dotsbox" style="text-align: center;">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+        </div>
+    </div>
+
+    <div class ="main_contents1">
+
+    <div class="Re_box">
+      	<img class ="Re_img" alt="" src="../img/jean.jpg">
+    <div class="Re_box_text_box">
+            <a class = "RE_a" href="/item/searchItem?categorySearchBar=Pants">Pants </a>
+        </div>
+    </div>
+
+    <div class="Re_box">
+      	<img class ="Re_img" alt="" src="../img/shose.jpg">
+        <div class="Re_box_text_box">
+            <a class = "RE_a" href="/item/searchItem?categorySearchBar=Shoes"> Shoes </a>
+        </div>
+    </div>
+
+    <div class="Re_box">
+    <img class ="Re_img" alt="" src="../img/coat.jpg">
+        <div class="Re_box_text_box">
+            <a class = "RE_a" href="/item/searchItem?categorySearchBar=Outer"> Outer </a>
+        </div>
+    </div>
+
+
+</div>
+<!-- main contents 1 _ img box end-->
+
+<!-- main text 왜 필요한지 모를, layout 분할 ?-->
+<div class = "main_center_text">
+    <p class="main_center_p"> 
+    new arrivals </p>
+   <div  class="a" ></div>
+</div>
+<!-- main text end-->
+
+<!-- main contents 2 _
+card list and under box start-->
+<div class="main_contents2">
+    <!-- card list 8 start-->
+    <div class="card_list">
+    
+        <th:block th:each="Item : ${Item}">
+          <div class ="list_box">
+          <div class="box">
+          <img class="card_contents"  th:src="@{/img/}+${Item.itemImage}+@{.png}" th:alt="${Item.itemImage}" >
+        <div class="over">
+            <div class="caption">  <a th:href="@{/item/contentView?itemNum=}+${Item.itemNum}">
+            <p  th:text="${Item.itemName}" style="font-size:20px; color:black;"> </p></a></div>
+        </div>								
+    </div>
+        </div>
+        </th:block>	
+        
+    </div>
+    
+    <div class = "main_center_text">
+</div>
+    <!-- card list 8 end-->
+</div>
+
+
+<!-- under box start-->
+<div class ="main_under">
+
+    <img class="under_img_box" src="../img/milky.jpg">
+
+    <div class ="under_text_slide">
+        <div class="under_text">
+            <p></p>
+        </div>
+        <div class="under_text">
+          “Simplicity is the keynote of all true elegance.” <br>– Coco Chanel
+        </div>
+        <div class="under_text">
+            <p></p>
+        </div>
+    </div>
+
+</div>
+<!-- under box end-->
+
+<!-- main contents 2 _
+card list and under box end-->
+
+<div class = "under_nav">
+<div class="uder_nav_box">
+<img  class="icon" alt="" src="../img/kakao.png">
+<p class="nav_text"><strong>카카오 플친 추가 시 <br>  무료 상담 제공</strong></p>
+</div>
+
+<div class="uder_nav_box">
+<img  class="icon" alt="" src="../img/king.png">
+<p class="nav_text" ><strong>등급별 <br> 최대 20% 할인</strong> </p>
+</div>
+
+<div class="uder_nav_box">
+<img  class="icon" alt="" src="../img/package.png">
+<p class="nav_text" ><strong> 10만원 이상 <br>무료 배송</strong> </p>
+</div>
+
+<div class="uder_nav_box">
+<img  class="icon" alt="" src="../img/birthday.png">
+<p class="nav_text" ><strong>10,000원 <br> 생일 쿠폰 증정</strong></p>
+</div>
+</div>
+
+
+<!-- footer start -->
+<div class ="footer">
+    <!-- footer text -->
+    <div class="about_us"><p>ABOUT US</p> </div>
+     <div class="footer2">It's the trend that is not in the world</div>
+       <div class="footer3">
+            <p>서울시 서초구 강남대로 459 402호 백구시보</p>
+            <p>010-1234-1234</p>
+            <p>195@google.com</p>
+        </div>
+    <!-- footer logo start -->
+    <div class="about_us_logo">
+
+    </div>
+    <!-- footer logo end -->
+</div>
+    
+    
+    <script>
+  	  let app = new Vue({
+      	  el : '#searchItem',
+      	  data(){
+     	     return{
+            dropdown:'dropdown',
+            toggle:{
+              on : false
+            }
+          };
+        },
+        methods :{
+      	  searchclick(){
+              this.toggle.on =! this.toggle.on;
+          }
+        }
+      });
+      document.getElementById("logo").addEventListener('click', function () {
+            location.href = "/";
+      });
+      document.getElementById("aboutus").addEventListener('click', function () {
+      	location.href = "aboutus";
+      });
+      document.getElementById("products").addEventListener('click', function () {
+      	location.href="/item/search" 
+      });
+        
+    const myslider = document.querySelectorAll('.myslider');
+    const dot = document.querySelectorAll('.dot');
+
+    let counter = 1;
+    slidefun(counter);
+
+    let timer = setInterval(autoslide, 8000);
+    function autoslide() {
+        counter += 1;
+        slidefun(counter);
+    }
+    function plusSlides(n) {
+        counter +=n;
+        slidefun(counter);
+        resetTimer();
+    }
+    function currentSlide(n) {
+        counter = n;
+        slidefun(counter);
+        resetTimer();
+    }
+    function resetTimer(){
+        clearInterval(timer);
+        timer = setInterval(autoslide, 8000);
+    }
+    function slidefun(n) {
+        let i;
+        for(i = 0; i<myslider.length; i++){
+            myslider[i].style.display = "none";
+        }
+        for(i =0; i<dot.length; i++){
+            dot[i].classList.remove('active');
+        }
+        if(n > myslider.length){
+            counter =1;
+        }
+        if(n<1){
+            counter = myslider.length;
+        }
+        myslider[counter-1].style.display = "block";
+        dot[counter-1].classList.add('active');
+    }
+    </script>
+</body>
+
+</html>
