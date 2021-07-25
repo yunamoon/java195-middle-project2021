@@ -22,11 +22,11 @@ PUBLIC "-//mybatis.org//DTDMapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapp
 	</select>
 
 	<select id="memberInfo"  resultType="Member">
-		select memnum, Id, Password, Name, Email, Address, phNum, card from member where Id= #{Id} and Password= #{Password}
+		select * from member where Id= #{Id} and Password= #{Password}
 	</select>
 	
 	<select id="adminInfo" resultType="Admin">
-		select adminId, adminPassword from admin where adminId= #{Id} and adminPassword= #{Password}
+		select * from admin where adminId= #{Id} and adminpassword= #{Password}
 	</select>
 	
 	<update id="memberUpdate" parameterType="Member">

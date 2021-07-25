@@ -21,70 +21,80 @@ public class MemberController {
 
 	@Autowired
 	MemberMapper memberMapper;
-
-	// member list
+	
+	// 2021.04.09 _ 문유나 
+	// 195 서비스 전체 회원 목록 호출
 	@RequestMapping("/listMember")
 	public String memberListAll(Model model) {
 		model.addAttribute("members", memberMapper.listMember());
 		return "/member/listMember";
 	}
 	
-	// 마이 페이지
+	// 2021.04.09 _ 문유나 
+	// 상단의 mypage 아이콘 클릭 시, 회원 전용 메뉴 노출되는 페이지로 이동
 	@RequestMapping("/mainMember")
 	public String main() {
 		return "/member/mainMember";
 	}
 	
-	// 회원가입
+	// 2021.04.09 _ 문유나 
+	// 회원가입 html 호출
 	@RequestMapping("/joinMember")
 	public String join() {
 		return "/member/joinMember";
 	}
-
+	
+	// ㅊ
+	// 회원 가입 정보 기입 후, submit 버튼 클릭시 해당 정보를 member DTO로 받아서 DB에 저장 
+	// 회원 가입 완료 후, 로그인 페이지로 이동
 	@RequestMapping("/createMember")
 	public String create(Member member) {
-		System.out.println(member);
 		memberMapper.memberCreate(member);
 		return "/member/loginMember";
 	}
-
-	//동일 id 체크 메소드
+	
+	// 2021.04.09 _ 문유나 
+	// 회원 가입 시, ID 중복 여부 체크, ajax로 전달받은 id로 member db를 확인하고 일치하는 정보가 있을 경우
+	// 해당 정보를 반환한다.
 	@RequestMapping(value = "/membertest", method = RequestMethod.POST)
 	public @ResponseBody Member idOverlap(@RequestParam("id") String id) {
 		return memberMapper.idChk(id);
 	}
 	
-	// 로그인
+	// 2021.04.09 _ 문유나 
+	// 로그인 페이지로 이동
 	@RequestMapping("/loginMember")
 	public String login() {
 		return "/member/loginMember";
 	}
 
-
+	// 2021.07.1 로그인 업데이트 _ 문유나
+	// 사용자가 입력한 id와 password를 파라미터 값으로 받아서, db 내 일치 정보를 확인한다.
+	// 먼저 member table을 확인하고 , 일하는 결과가 없을 시에 admin table을 확인한다.
 	@PostMapping("/login")
 	public String login(String Id, String Password, Model model, HttpSession session) {
 		Member member = memberMapper.memberInfo(Id, Password);
-		System.out.println(member);
-		Admin admin = memberMapper.adminInfo(Id, Password);
-		System.out.println("1");
-		System.out.println(admin);
 		
+		// member db 내 일치하는 결과가 있을 경우, 회원 로그인
 		if (member != null) {
-			System.out.println(member);
+			System.out.println(member + "회원입니다.");
 			session.setAttribute("user", member);
 			return "redirect:/index";
+		// member db내 일치하는 결과가 없을 경우, admin table 체크
 		} else {
+			Admin admin = memberMapper.adminInfo(Id, Password);
+			
+			// admin table 내 일치하는 정보가 존재 할 경우, admin login 
 			if(admin !=null) {
-				System.out.println("2");
-				session.setAttribute("admin", admin);
-				System.out.println(admin);				
+				System.out.println(admin + "관리자입니다");
+				session.setAttribute("admin", admin);			
 				return "redirect:/index";
-			}
-			System.out.println("3");				
-			System.out.println(admin);				
-			model.addAttribute("failMsg", "다시 입력해 주십시오");
+			// admin table에도 일치하는 정보가 없는 경우, 오류 메세지 반환
+			} else { 
+			model.addAttribute("failMsg", "아이디 혹은 비밀번호를 확인하여 주십시오.");
 			return "/member/loginMember";
-		}		
+			}		
+	  }
 	}
 
 	// 로그아웃
