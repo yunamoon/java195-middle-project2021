@@ -2,22 +2,27 @@
 195 쇼핑몰은 spring boot를 이용하여 제작한 의류 쇼핑몰 입니다. 
 <br>
 <br>
+
 # 개발 환경
 - spring boot , java , html , css , javascript , jquery , ajax , oracle DB 
 <br>
 <br>
+
 # 프로젝트 상세
 - 프로젝트 기간 : 4월 1일 ~ 4월 12일 ( 기획 7일, 개발 6일 )
 - 프로젝트 인원 : 4 인 
 <br>
 <br>
+
 # 기획 및 설계
 - 노션 : https://www.notion.so/195-8c0eb37b4b0f4c52839fa1cef7e3d33e
 <br>
 <br>
+
 # 구현 화면 보기 
 <br>
 <br>
+
 ### 메인 화면
 ![메인1](https://user-images.githubusercontent.com/78346017/126985493-811308c2-d954-42e2-8052-10c645392baf.JPG)
 ![메인 2](https://user-images.githubusercontent.com/78346017/126985528-19071bb9-c7bb-4e61-a513-84c3c1f2e111.JPG)
@@ -68,7 +73,8 @@
 - 원하는 상품을 클릭하면 해당 상품의 상세 보기 페이지로 이동합니다.
 - 페이지 내에서 상품의 사이즈와 수량을 선택 할 수 있으며, 장바구니에 등록하기를 누르면 확인 창과 함께 장바구니에 상품이 보관됩니다. 
 - 장바구니 내에서 수량을 변경 할 수 있으며, 결제 버튼을 누르면 결제가 이루어 집니다.
-<br>ㅍ
+<br>
+
 ## 주문 및 주문 목록
 ![스크린샷(12)](https://user-images.githubusercontent.com/78346017/126998869-2179feaf-a6ab-42b9-a215-62e6344630e9.png)
 ![스크린샷(14)](https://user-images.githubusercontent.com/78346017/126998877-a16c94a3-4d7a-46a1-ad71-1f42f1e12c54.png)
